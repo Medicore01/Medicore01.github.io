@@ -224,14 +224,14 @@
             <p><img src="/image/20190410094157454.jpeg" alt="picture"></p>
 <p>写在之前：在使用springboot进行javaweb开发时有许多依赖和配置文件需要手动添加，在这里进行阶段性的汇总</p>
 <h2 id="JWT令牌工具类需要的依赖"><a href="#JWT令牌工具类需要的依赖" class="headerlink" title="JWT令牌工具类需要的依赖"></a>JWT令牌工具类需要的依赖</h2><blockquote>
-<p>要顺利生产JWT令牌，需要注入此依赖</p>
+<p>要顺利生成JWT令牌，需要注入此依赖</p>
 </blockquote>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.jsonwebtoken<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jjwt<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.9.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 
 
 <h2 id="SpringBoot项目结合JWT所需依赖"><a href="#SpringBoot项目结合JWT所需依赖" class="headerlink" title="SpringBoot项目结合JWT所需依赖"></a>SpringBoot项目结合JWT所需依赖</h2><blockquote>
-<p>使用的jdk版本过高在生成JWT令牌时会报错(java.lang.ClassNotFoundException:javax.xml.bind.DatatypeConverter)，之前java 8及以前的版本是默认包含jaxb-api包的，但是升级后的版本就需要手动来导入这个包了。</p>
+<p>使用的jdk版本过高在生成JWT令牌时会报错(java.lang.ClassNotFoundException:javax.xml.bind.DatatypeConverter)，之前java8及以前的版本是默认包含jaxb-api包的，但是升级后的版本就需要手动来导入这个包了。</p>
 </blockquote>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.xml.bind<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jaxb-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
