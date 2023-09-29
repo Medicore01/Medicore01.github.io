@@ -262,6 +262,11 @@
 
 
 
+<h2 id="阿里云OSS依赖"><a href="#阿里云OSS依赖" class="headerlink" title="阿里云OSS依赖"></a>阿里云OSS依赖</h2><p><a href="#%E9%98%BF%E9%87%8C%E4%BA%91OSS%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%EF%BC%88yml%EF%BC%89"></a></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--阿里云OSS--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.aliyun.oss<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>aliyun-sdk-oss<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.15.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
 <h2 id="连接数据库配置文件-yml"><a href="#连接数据库配置文件-yml" class="headerlink" title="连接数据库配置文件(yml)"></a>连接数据库配置文件(yml)</h2><blockquote>
 <p>导入Mysql数据库驱动依赖后需要连接数据库</p>
 </blockquote>
@@ -276,10 +281,18 @@
 
 
 
-<h2 id="配置日志，查看sql的输出日志"><a href="#配置日志，查看sql的输出日志" class="headerlink" title="配置日志，查看sql的输出日志"></a>配置日志，查看sql的输出日志</h2><blockquote>
+<h2 id="配置日志，查看sql的输出日志-yml"><a href="#配置日志，查看sql的输出日志-yml" class="headerlink" title="配置日志，查看sql的输出日志(yml)"></a>配置日志，查看sql的输出日志(yml)</h2><blockquote>
 <p>需要配置在application.properties中</p>
 </blockquote>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mybatis:</span></span><br><span class="line">  <span class="attr">configuration:</span></span><br><span class="line">    <span class="attr">log-impl:</span> <span class="string">org.apache.ibatis.logging.stdout.StdOutImpl</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="阿里云OSS配置文件（yml）"><a href="#阿里云OSS配置文件（yml）" class="headerlink" title="阿里云OSS配置文件（yml）"></a>阿里云OSS配置文件（yml）</h2><p><a href="#%E9%98%BF%E9%87%8C%E4%BA%91OSS%E4%BE%9D%E8%B5%96"></a></p>
+<blockquote>
+<p>需要配置在application.properties中</p>
+</blockquote>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">aliyun:</span></span><br><span class="line">  <span class="attr">oss:</span></span><br><span class="line">    <span class="attr">endpoint:</span> <span class="string">https://oss-cn-beijing.aliyuncs.com</span></span><br><span class="line">    <span class="attr">accessKeyId:</span> <span class="string">accessKeyId</span></span><br><span class="line">    <span class="attr">accessKeySecret:</span> <span class="string">accessKeySecret</span></span><br><span class="line">    <span class="attr">bucketName:</span> <span class="string">name</span></span><br></pre></td></tr></table></figure>
 
 
 
