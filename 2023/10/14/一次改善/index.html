@@ -12,7 +12,7 @@
 
 
 
-<title>Category | Rorschach&#39;s Blog</title>
+<title>一次改善 | Rorschach&#39;s Blog</title>
 
 
 
@@ -125,133 +125,110 @@
     }
 </script>
             <div class="main">
-                
+                <div class="container">
+    
+    
 
-
-
-    <div class="container">
-        <div class="post-wrap categories">
-            <h2 class="post-title">-&nbsp;Categories&nbsp;-</h2>
-            <div class="categories-card">
-                
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">一次改善</h1>
+            
+                <div class="post-meta">
                     
-                    <div class="card-item">
-                        <div class="categories">
-                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/">
-                                <h3>
-                                    <i class="iconfont icon-category" style="padding-right:3px"></i>
-                                    学习总结
-                                </h3>
-                            </a>
-                            
-                                
-                                
-                                    <article class="archive-item">
-                                        <a class="archive-item-link"
-                                           href="/2023/09/28/javaweb%E5%BC%80%E5%8F%91%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E4%BE%9D%E8%B5%96/">javaweb开发中常用的依赖和配置文件</a>
-                                    </article>
-                                
-                            
-                                
-                                
-                                    <article class="archive-item">
-                                        <a class="archive-item-link"
-                                           href="/2023/09/27/javaweb%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E7%B1%BB/">javaweb开发过程中常用的类</a>
-                                    </article>
-                                
-                            
-                                
-                                
-                                    <article class="archive-item">
-                                        <a class="archive-item-link"
-                                           href="/2023/10/07/%E5%B7%A5%E5%85%B7%E7%BD%91%E7%AB%99/">工具网站</a>
-                                    </article>
-                                
-                            
-                                
-                                
-                                    <article class="archive-item">
-                                        <a class="archive-item-link"
-                                           href="/2023/10/13/%E5%85%B3%E4%BA%8EVisual-Studio/">关于Visual Studio</a>
-                                    </article>
-                                
-                            
-                            
-                        </div>
-                    </div>
-                
+                        Author: <a itemprop="author" rel="author" href="/">Rorschach</a>
                     
-                    <div class="card-item">
-                        <div class="categories">
-                            <a href="/categories/%E5%85%B6%E4%BB%96/">
-                                <h3>
-                                    <i class="iconfont icon-category" style="padding-right:3px"></i>
-                                    其他
-                                </h3>
-                            </a>
-                            
-                                
-                                
-                                    <article class="archive-item">
-                                        <a class="archive-item-link"
-                                           href="/2023/09/30/%E4%B8%80%E4%BA%9B%E6%9C%89%E8%B6%A3%E7%9A%84%E7%BD%91%E7%AB%99/">一些有趣的网站</a>
-                                    </article>
-                                
-                            
-                            
-                        </div>
-                    </div>
-                
+    
                     
-                    <div class="card-item">
-                        <div class="categories">
-                            <a href="/categories/%E6%97%A5%E5%B8%B8/">
-                                <h3>
-                                    <i class="iconfont icon-category" style="padding-right:3px"></i>
-                                    日常
-                                </h3>
-                            </a>
+                        <span class="post-time">
+                        Date: <a href="#">October 14, 2023&nbsp;&nbsp;10:45:18</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
                             
-                                
-                                
-                                    <article class="archive-item">
-                                        <a class="archive-item-link"
-                                           href="/2023/09/30/%E4%B8%80%E6%AC%A1%E5%B0%9D%E8%AF%95/">一次尝试</a>
-                                    </article>
-                                
+                                <a href="/categories/%E6%97%A5%E5%B8%B8/">日常</a>
                             
-                                
-                                
-                                    <article class="archive-item">
-                                        <a class="archive-item-link"
-                                           href="/2023/09/29/%E6%97%A5%E5%B8%B8%E6%91%84%E5%BD%B1/">日常摄影</a>
-                                    </article>
-                                
-                            
-                                
-                                
-                                    <article class="archive-item">
-                                        <a class="archive-item-link"
-                                           href="/2023/09/26/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">第一篇博客</a>
-                                    </article>
-                                
-                            
-                                
-                                
-                                    <article class="archive-item">
-                                        <a class="archive-item-link"
-                                           href="/2023/10/14/%E4%B8%80%E6%AC%A1%E6%94%B9%E5%96%84/">一次改善</a>
-                                    </article>
-                                
-                            
-                            
-                        </div>
-                    </div>
-                
-            </div>
+                        </span>
+                    
+                </div>
+            
+        </header>
+    
+        <div class="post-content">
+            <p>我发现使用文件夹储存图片资源打包上传到 Github 后，在没有使用 VPN 的情况下图片的加载非常缓慢，听说一般都是用图床来解决这个问题的，我没有使用过图床，于是想起了阿里云OSS 储存，把图片都打包上传到了 Bucket,上传过后发现效果不错，图片加载速度有明显改善。</p>
+<p>那就先这样吧，最近真的是有些小忙啊 :disappointed:</p>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/6f5015c0-0aa6-4678-b5bf-ff4bbf415a65.jpg"></p>
 
         </div>
-    </div>
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Rorschach</span>
+                    </p>
+                
+                
+                
+                
+    
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%BC%80%E5%8F%91/"># 开发</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2023/10/13/%E5%85%B3%E4%BA%8EVisual-Studio/">关于Visual Studio</a>
+            
+        </section>
+
+
+
+    </article>
+
+
+</div>
+_
+
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '0ad73a00ab86ccc5faef',
+        clientSecret: 'be1d314bda9d1fb1c6603dbfa58ec2215f865a54',
+        repo: 'Medicore01.github.io',
+        owner: 'Medicore01',
+        admin: 'Medicore01',
+        id: md5(location.pathname),      
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
 
             </div>
             <footer id="footer" class="footer">
