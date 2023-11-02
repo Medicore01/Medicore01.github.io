@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Rorschach">
+
+
+
+
+
+<title>关于WIndows 11桌面图标自动变小 | Rorschach&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/21.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+    
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Rorschach&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Rorschach&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">关于WIndows 11桌面图标自动变小</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Rorschach</a>
+                    
+    
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 2, 2023&nbsp;&nbsp;19:54:50</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E6%97%A5%E5%B8%B8/">日常</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+    
+        <div class="post-content">
+            <p>WIndows 11 中有些奇奇怪怪的异常，比如某次开机突然发现自己桌面上的图标都变得小小的。先说说查找到的原因，然后是解决方法。</p>
+<ul>
+<li><p>为什么桌面上的图标自动变小了？</p>
+<p>主要的原因是把设备的分辨率调得过高了，也有可能是因为 DPI (<em>DPI  是用于测量鼠标灵敏度的标准,表示设备可以检测的  DPIs  (每线性) 英寸的点数</em>。)设置是非标准的。这个异常主要发生在改变分辨率或自动调整DPI设置的时候，但它只影响非 WIndows 应用程序的图标。</p>
+</li>
+<li><p>如何解决这个异常？</p>
+<ol>
+<li><p>快速解决方案——清除图标缓存</p>
+<p>找到 AppData 文件夹(通常在用户目录下的用户名目录中)，依次点击 Local, Microsoft, Windows, Explorer。</p>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/7671c81a-74f4-4f83-b35f-30b6fdcf5e9d.png"></p>
+<p>删除所有文件名前面带有 iconcache,后缀名为 db 的文件,除此之外不要删掉这里的任何文件,之后重启电脑,图标缓存将重建,图标大小多半可以恢复。</p>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/909effe2-2f68-41bc-a9fc-40e25e8bb67a.png"></p>
+</li>
+<li><p>可以阻止此异常的发生吗？</p>
+<p>不行，目前没有能永久修复此异常的方法，但是微软也许已经注意到了这个异常，并在未来进行修复，但目前来说，阻止此异常的最好方法是不要过多地切换分辨率。(至少还是很容易修复的)</p>
+</li>
+</ol>
+</li>
+</ul>
+<p><code> end</code></p>
+
+        </div>
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Rorschach</span>
+                    </p>
+                
+                
+                
+                
+    
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"># 操作系统</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2023/11/02/commons-io%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/">commons-io方法总结</a>
+            
+        </section>
+
+
+
+    </article>
+
+
+</div>
+_
+
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '0ad73a00ab86ccc5faef',
+        clientSecret: 'be1d314bda9d1fb1c6603dbfa58ec2215f865a54',
+        repo: 'Medicore01.github.io',
+        owner: 'Medicore01',
+        admin: 'Medicore01',
+        id: md5(location.pathname),      
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Rorschach | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+<script>
+
+!
+
+function() {
+
+function n(n, e, t) {
+
+return n.getAttribute(e) || t
+
+}
+
+function e(n) {
+
+return document.getElementsByTagName(n)
+
+}
+
+function t() {var t = e("script"),
+
+o = t.length,
+
+i = t[o - 1];
+
+return {
+
+l: o,
+
+z: n(i, "zIndex", -1), //置于主页面背后
+
+o: n(i, "opacity", .5), //线条透明度
+
+c: n(i, "color", "0,0,0"), //线条颜色
+
+n: n(i, "count", 100) //线条数量
+
+}
+
+}
+
+function o() {
+
+a = m.width = window.innerWidth ||
+
+document.documentElement.clientWidth || document.body.clientWidth,
+
+c = m.height = window.innerHeight ||
+
+document.documentElement.clientHeight || document.body.clientHeight
+
+}
+
+function i() {
+
+r.clearRect(0, 0, a, c);
+
+var n, e, t, o, m, l;
+
+s.forEach(function(i, x) {
+
+for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 :
+
+1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1,
+
+1), e = x + 1; e < u.length; e++) n = u[e],
+
+null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l
+
+= o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o,
+
+i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t /
+
+2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y),
+
+r.lineTo(n.x, n.y), r.stroke()))
+
+}),
+
+x(i)
+
+}
+
+var a, c, u, m = document.createElement("canvas"),
+
+d = t(),
+
+l = "c_n" + d.l,
+
+r = m.getContext("2d"),
+
+x = window.requestAnimationFrame || window.webkitRequestAnimationFrame
+
+|| window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
+
+window.msRequestAnimationFrame ||
+
+function(n) {
+
+window.setTimeout(n, 1e3 / 45)
+
+},
+
+w = Math.random,
+
+y = {
+
+x: null,
+
+y: null,
+
+max: 2e4
+
+};
+
+m.id = l,
+
+m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z +
+
+";opacity:" + d.o,
+
+e("body")[0].appendChild(m),
+
+o(),
+
+window.onresize = o,
+
+window.onmousemove = function(n) {
+
+n = n || window.event,
+
+y.x = n.clientX,
+
+y.y = n.clientY},
+
+window.onmouseout = function() {
+
+y.x = null,
+
+y.y = null
+
+};
+
+for (var s = [], f = 0; d.n > f; f++) {
+
+var h = w() * a,
+
+g = w() * c,
+
+v = 2 * w() - 1,
+
+p = 2 * w() - 1;
+
+s.push({
+
+x: h,
+
+y: g,
+
+xa: v,
+
+ya: p,
+
+max: 6e3
+
+})
+
+}
+
+u = s.concat([y]),
+
+setTimeout(function() {
+
+i()
+
+},
+
+100)
+
+} ();
+
+</script>
+
+</html>

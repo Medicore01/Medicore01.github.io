@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Rorschach">
+
+
+
+
+
+<title>commons-io方法总结 | Rorschach&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/21.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+    
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Rorschach&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Rorschach&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">commons-io方法总结</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Rorschach</a>
+                    
+    
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 2, 2023&nbsp;&nbsp;19:38:11</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/">学习总结</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+    
+        <div class="post-content">
+            <p>写在之前：各种IO操作在开发过程中必不可少，如果进行手写会非常复杂繁琐，在这里对找到的相关资料进行搬运和总结，便于复习和查找</p>
+<h1 id="IOUtils（数据相关）"><a href="#IOUtils（数据相关）" class="headerlink" title="IOUtils（数据相关）"></a>IOUtils（数据相关）</h1><h3 id="拷贝方法："><a href="#拷贝方法：" class="headerlink" title="拷贝方法："></a>拷贝方法：</h3><p>copy方法有多个重载方法，满足不同的输入输出流</p>
+<p>IOUtils.copy(InputStream input, OutputStream output)</p>
+<p>IOUtils.copy(InputStream input, OutputStream output, int bufferSize)&#x2F;&#x2F;可指定缓冲区大小</p>
+<p>IOUtils.copy(InputStream input, Writer output, String inputEncoding)&#x2F;&#x2F;可指定输入流的编码表</p>
+<p>IOUtils.copy(Reader input, Writer output)</p>
+<p>IOUtils.copy(Reader input, OutputStream output, String outputEncoding)&#x2F;&#x2F;可指定输出流的编码表</p>
+<h3 id="拷贝大文件的方法："><a href="#拷贝大文件的方法：" class="headerlink" title="拷贝大文件的方法："></a>拷贝大文件的方法：</h3><p>&#x2F;&#x2F; 这个方法适合拷贝较大的数据流，比如2G以上</p>
+<p>IOUtils.copyLarge(Reader input, Writer output) &#x2F;&#x2F; 默认会用1024*4的buffer来读取</p>
+<p>IOUtils.copyLarge(Reader input, Writer output, char[] buffer)&#x2F;&#x2F;可指定缓冲区大小</p>
+<p> </p>
+<h3 id="将输入流转换成字符串"><a href="#将输入流转换成字符串" class="headerlink" title="将输入流转换成字符串"></a>将输入流转换成字符串</h3><p>IOUtils.toString(Reader input)</p>
+<p>IOUtils.toString(byte[] input, String encoding)</p>
+<p>IOUtils.toString(InputStream input, Charset encoding)</p>
+<p>IOUtils.toString(InputStream input, String encoding)</p>
+<p>IOUtils.toString(URI uri, String encoding)</p>
+<p>IOUtils.toString(URL url, String encoding)</p>
+<p> </p>
+<h3 id="将输入流转换成字符数组"><a href="#将输入流转换成字符数组" class="headerlink" title="将输入流转换成字符数组"></a>将输入流转换成字符数组</h3><p>IOUtils.toByteArray(InputStream input)</p>
+<p>IOUtils.toByteArray(InputStream input, int size)</p>
+<p>IOUtils.toByteArray(URI uri)</p>
+<p>IOUtils.toByteArray(URL url)</p>
+<p>IOUtils.toByteArray(URLConnection urlConn)</p>
+<p>IOUtils.toByteArray(Reader input, String encoding)</p>
+<p> </p>
+<h3 id="字符串读写"><a href="#字符串读写" class="headerlink" title="字符串读写"></a>字符串读写</h3><p>IOUtils.readLines(Reader input)</p>
+<p>IOUtils.readLines(InputStream input, Charset encoding)</p>
+<p>IOUtils.readLines(InputStream input, String encoding)</p>
+<p>IOUtils.writeLines(Collection&lt;?&gt; lines, String lineEnding, Writer writer)</p>
+<p>IOUtils.writeLines(Collection&lt;?&gt; lines, String lineEnding, OutputStream output, Charset encoding)</p>
+<p>IOUtils.writeLines(Collection&lt;?&gt; lines, String lineEnding, OutputStream output, String encoding)</p>
+<h3 id="从一个流中读取内容"><a href="#从一个流中读取内容" class="headerlink" title="从一个流中读取内容"></a>从一个流中读取内容</h3><p>IOUtils.read(InputStream input, byte[] buffer)</p>
+<p>IOUtils.read(InputStream input, byte[] buffer, int offset, int length) IOUtils.read(Reader input, char[] buffer)</p>
+<p>IOUtils.read(Reader input, char[] buffer, int offset, int length)</p>
+<h3 id="把数据写入到输出流中"><a href="#把数据写入到输出流中" class="headerlink" title="把数据写入到输出流中"></a>把数据写入到输出流中</h3><p>IOUtils.write(byte[] data, OutputStream output)</p>
+<p>IOUtils.write(byte[] data, Writer output, Charset encoding)</p>
+<p>IOUtils.write(byte[] data, Writer output, String encoding)</p>
+<p>IOUtils.write(char[] data, Writer output)</p>
+<p>IOUtils.write(char[] data, OutputStream output, Charset encoding)</p>
+<p>IOUtils.write(char[] data, OutputStream output, String encoding)</p>
+<p>IOUtils.write(String data, Writer output)</p>
+<p>IOUtils.write(CharSequence data, Writer output)</p>
+<p> </p>
+<h3 id="从一个流中读取内容，如果读取的长度不够，就会抛出异常"><a href="#从一个流中读取内容，如果读取的长度不够，就会抛出异常" class="headerlink" title="从一个流中读取内容，如果读取的长度不够，就会抛出异常"></a>从一个流中读取内容，如果读取的长度不够，就会抛出异常</h3><p>IOUtils.readFully(InputStream input, int length)</p>
+<p>IOUtils.readFully(InputStream input, byte[] buffer)</p>
+<p>IOUtils.readFully(InputStream input, byte[] buffer, int offset, int length) IOUtils.readFully(Reader input, char[] buffer)</p>
+<p>IOUtils.readFully(Reader input, char[] buffer, int offset, int length)</p>
+<h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h3><p>IOUtils.contentEquals(InputStream input1, InputStream input2) &#x2F;&#x2F; 比较两个流是否相等</p>
+<p>IOUtils.contentEquals(Reader input1, Reader input2)</p>
+<p>IOUtils.contentEqualsIgnoreEOL(Reader input1, Reader input2) &#x2F;&#x2F; 比较两个流，忽略换行符</p>
+<p> </p>
+<h3 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h3><p>IOUtils.skip(InputStream input, long toSkip) &#x2F;&#x2F; 跳过指定长度的流</p>
+<p>IOUtils.skip(Reader input, long toSkip)</p>
+<p>IOUtils.skipFully(InputStream input, long toSkip) &#x2F;&#x2F; 如果忽略的长度大于现有的长度，就会抛出异常</p>
+<p>IOUtils.skipFully(Reader input, long toSkip)</p>
+<p> </p>
+<h1 id="FileUtils（文件-文件夹相关）"><a href="#FileUtils（文件-文件夹相关）" class="headerlink" title="FileUtils（文件&#x2F;文件夹相关）"></a>FileUtils（文件&#x2F;文件夹相关）</h1><h3 id="复制文件夹"><a href="#复制文件夹" class="headerlink" title="复制文件夹"></a>复制文件夹</h3><p>FileUtils.copyDirectory(File srcDir, File destDir) &#x2F;&#x2F; 复制文件夹（文件夹里面的文件内容也会复制）</p>
+<p>FileUtils.copyDirectory(File srcDir, File destDir, FileFilter filter) &#x2F;&#x2F; 复制文件夹，带有文件过滤功能</p>
+<p>FileUtils.copyDirectoryToDirectory(File srcDir, File destDir) &#x2F;&#x2F; 以子目录的形式将文件夹复制到到另一个文件夹下</p>
+<p> </p>
+<h3 id="复制文件"><a href="#复制文件" class="headerlink" title="复制文件"></a>复制文件</h3><p>FileUtils.copyFile(File srcFile, File destFile) &#x2F;&#x2F; 复制文件</p>
+<p>FileUtils.copyFile(File input, OutputStream output) &#x2F;&#x2F; 复制文件到输出流</p>
+<p>FileUtils.copyFileToDirectory(File srcFile, File destDir) &#x2F;&#x2F; 复制文件到一个指定的目录</p>
+<p>FileUtils.copyInputStreamToFile(InputStream source, File destination) &#x2F;&#x2F; 把输入流里面的内容复制到指定文件</p>
+<p>FileUtils.copyURLToFile(URL source, File destination) &#x2F;&#x2F; 把URL 里面内容复制到文件(可以下载文件)</p>
+<p>FileUtils.copyURLToFile(URL source, File destination, int connectionTimeout, int readTimeout)</p>
+<p> </p>
+<h3 id="把字符串写入文件"><a href="#把字符串写入文件" class="headerlink" title="把字符串写入文件"></a>把字符串写入文件</h3><p>FileUtils.writeStringToFile(File file, String data, String encoding)</p>
+<p>FileUtils.writeStringToFile(File file, String data, String encoding, boolean append)</p>
+<h3 id="把字节数组写入文件"><a href="#把字节数组写入文件" class="headerlink" title="把字节数组写入文件"></a>把字节数组写入文件</h3><p>FileUtils.writeByteArrayToFile(File file, byte[] data)</p>
+<p>FileUtils.writeByteArrayToFile(File file, byte[] data, boolean append) FileUtils.writeByteArrayToFile(File file, byte[] data, int off, int len) FileUtils.writeByteArrayToFile(File file, byte[] data, int off, int len, boolean append)</p>
+<h3 id="把集合里面的内容写入文件"><a href="#把集合里面的内容写入文件" class="headerlink" title="把集合里面的内容写入文件"></a>把集合里面的内容写入文件</h3><p>&#x2F;&#x2F; encoding：文件编码，lineEnding：每行以什么结尾</p>
+<p>FileUtils.writeLines(File file, Collection&lt;?&gt; lines)</p>
+<p>FileUtils.writeLines(File file, Collection&lt;?&gt; lines, boolean append)</p>
+<p>FileUtils.writeLines(File file, Collection&lt;?&gt; lines, String lineEnding)</p>
+<p>FileUtils.writeLines(File file, Collection&lt;?&gt; lines, String lineEnding, boolean append)</p>
+<p>FileUtils.writeLines(File file, String encoding, Collection&lt;?&gt; lines)</p>
+<p>FileUtils.writeLines(File file, String encoding, Collection&lt;?&gt; lines, boolean append)</p>
+<p>FileUtils.writeLines(File file, String encoding, Collection&lt;?&gt; lines, String lineEnding)</p>
+<p>FileUtils.writeLines(File file, String encoding, Collection&lt;?&gt; lines, String lineEnding, boolean append)</p>
+<h3 id="往文件里面写内容"><a href="#往文件里面写内容" class="headerlink" title="往文件里面写内容"></a>往文件里面写内容</h3><p>FileUtils.write(File file, CharSequence data, Charset encoding)</p>
+<p>FileUtils.write(File file, CharSequence data, Charset encoding, boolean append)</p>
+<p>FileUtils.write(File file, CharSequence data, String encoding)</p>
+<p>FileUtils.write(File file, CharSequence data, String encoding, boolean append)</p>
+<p> </p>
+<h3 id="文件移动"><a href="#文件移动" class="headerlink" title="文件移动"></a>文件移动</h3><p>FileUtils.moveDirectory(File srcDir, File destDir) &#x2F;&#x2F; 文件夹在内的所有文件都将移动FileUtils.moveDirectoryToDirectory(File src, File destDir, boolean createDestDir) &#x2F;&#x2F; 以子文件夹的形式移动到另外一个文件下</p>
+<p>FileUtils.moveFile(File srcFile, File destFile) &#x2F;&#x2F; 移动文件</p>
+<p>FileUtils.moveFileToDirectory(File srcFile, File destDir, boolean createDestDir) &#x2F;&#x2F; 以子文件的形式移动到另外一个文件夹下</p>
+<p>FileUtils.moveToDirectory(File src, File destDir, boolean createDestDir) &#x2F;&#x2F; 移动文件或者目录到指定的文件夹内</p>
+<p> </p>
+<h3 id="清空和删除文件夹"><a href="#清空和删除文件夹" class="headerlink" title="清空和删除文件夹"></a>清空和删除文件夹</h3><p>FileUtils.deleteDirectory(File directory) &#x2F;&#x2F; 删除文件夹，包括文件夹和文件夹里面所有的文件</p>
+<p>FileUtils.cleanDirectory(File directory) &#x2F;&#x2F; 清空文件夹里面的所有的内容</p>
+<p>FileUtils.forceDelete(File file) &#x2F;&#x2F; 删除，会抛出异常</p>
+<p>FileUtils.deleteQuietly(File file) &#x2F;&#x2F; 删除，不会抛出异常</p>
+<p> </p>
+<h3 id="创建文件夹"><a href="#创建文件夹" class="headerlink" title="创建文件夹"></a>创建文件夹</h3><p>FileUtils.forceMkdir(File directory) &#x2F;&#x2F; 创建文件夹(可创建多级)</p>
+<p>FileUtils.forceMkdirParent(File file) &#x2F;&#x2F; 创建文件的父级目录</p>
+<p> </p>
+<h3 id="获取文件输入-输出流"><a href="#获取文件输入-输出流" class="headerlink" title="获取文件输入&#x2F;输出流"></a>获取文件输入&#x2F;输出流</h3><p>FileUtils.openInputStream(File file)</p>
+<p>FileUtils.openOutputStream(File file)</p>
+<h3 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a>读取文件</h3><p>FileUtils.readFileToByteArray(File file) &#x2F;&#x2F; 把文件读取到字节数组</p>
+<p>FileUtils.readFileToString(File file, Charset encoding) &#x2F;&#x2F; 把文件读取成字符串</p>
+<p>FileUtils.readFileToString(File file, String encoding)</p>
+<p>FileUtils.readLines(File file, Charset encoding) &#x2F;&#x2F; 把文件读取成字符串集合</p>
+<p>FileUtils.readLines(File file, String encoding)</p>
+<p> </p>
+<h3 id="测试两个文件的修改时间"><a href="#测试两个文件的修改时间" class="headerlink" title="测试两个文件的修改时间"></a>测试两个文件的修改时间</h3><p>FileUtils.isFileNewer(File file, Date date)</p>
+<p>FileUtils.isFileNewer(File file, File reference)</p>
+<p>FileUtils.isFileNewer(File file, long timeMillis)</p>
+<p>FileUtils.isFileOlder(File file, Date date)</p>
+<p>FileUtils.isFileOlder(File file, File reference)</p>
+<p>FileUtils.isFileOlder(File file, long timeMillis)</p>
+<p> </p>
+<p> </p>
+<h3 id="文件-文件夹的迭代"><a href="#文件-文件夹的迭代" class="headerlink" title="文件&#x2F;文件夹的迭代"></a>文件&#x2F;文件夹的迭代</h3><p>FileUtils.iterateFiles(File directory, IOFileFilter fileFilter, IOFileFilter dirFilter)</p>
+<p>FileUtils.iterateFiles(File directory, String[] extensions, boolean recursive)</p>
+<p>FileUtils.iterateFilesAndDirs(File directory, IOFileFilter fileFilter, IOFileFilter dirFilter)</p>
+<p>FileUtils.lineIterator(File file)</p>
+<p>FileUtils.lineIterator(File file, String encoding)</p>
+<p> </p>
+<p>FileUtils.listFiles(File directory, IOFileFilter fileFilter, IOFileFilter dirFilter)</p>
+<p>FileUtils.listFiles(File directory, String[] extensions, boolean recursive)</p>
+<p>FileUtils.listFilesAndDirs(File directory, IOFileFilter fileFilter, IOFileFilter dirFilter)</p>
+<p> </p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>FileUtils.isSymlink(File file) &#x2F;&#x2F; 判断是否是符号链接</p>
+<p>FileUtils.directoryContains(File directory, File child) &#x2F;&#x2F; 判断文件夹内是否包含某个文件或者文件夹</p>
+<p> FileUtils.sizeOf(File file) &#x2F;&#x2F; 获取文件或者文件夹的大小</p>
+<p>FileUtils.getTempDirectory()&#x2F;&#x2F; 获取临时目录文件</p>
+<p>FileUtils.getTempDirectoryPath()&#x2F;&#x2F; 获取临时目录路径</p>
+<p>FileUtils.getUserDirectory()&#x2F;&#x2F; 获取用户目录文件</p>
+<p>FileUtils.getUserDirectoryPath()&#x2F;&#x2F; 获取用户目录路径</p>
+<p>FileUtils.touch(File file) &#x2F;&#x2F; 创建文件</p>
+<p>FileUtils.contentEquals(File file1, File file2) &#x2F;&#x2F; 比较两个文件内容是否相同</p>
+<h1 id="FilenameUtils（文件名-后缀名相关）"><a href="#FilenameUtils（文件名-后缀名相关）" class="headerlink" title="FilenameUtils（文件名&#x2F;后缀名相关）"></a>FilenameUtils（文件名&#x2F;后缀名相关）</h1><p>FilenameUtils.concat(String basePath, String fullFilenameToAdd) &#x2F;&#x2F; 合并目录和文件名为文件全路径</p>
+<p>FilenameUtils.getBaseName(String filename) &#x2F;&#x2F; 去除目录和后缀后的文件名</p>
+<p>FilenameUtils.getExtension(String filename) &#x2F;&#x2F; 获取文件的后缀</p>
+<p>FilenameUtils.getFullPath(String filename) &#x2F;&#x2F; 获取文件的目录</p>
+<p>FilenameUtils.getName(String filename) &#x2F;&#x2F; 获取文件名</p>
+<p>FilenameUtils.getPath(String filename) &#x2F;&#x2F; 去除盘符后的路径</p>
+<p>FilenameUtils.getPrefix(String filename) &#x2F;&#x2F; 盘符</p>
+<p>FilenameUtils.indexOfExtension(String filename) &#x2F;&#x2F; 获取最后一个.的位置</p>
+<p>FilenameUtils.indexOfLastSeparator(String filename) &#x2F;&#x2F; 获取最后一个&#x2F;的位置</p>
+<p>FilenameUtils.normalize(String filename) &#x2F;&#x2F; 获取当前系统格式化路径</p>
+<p>FilenameUtils.removeExtension(String filename) &#x2F;&#x2F; 移除文件的扩展名</p>
+<p>FilenameUtils.separatorsToSystem(String path) &#x2F;&#x2F; 转换分隔符为当前系统分隔符</p>
+<p>FilenameUtils.separatorsToUnix(String path) &#x2F;&#x2F; 转换分隔符为linux系统分隔符</p>
+<p>FilenameUtils.separatorsToWindows(String path) &#x2F;&#x2F; 转换分隔符为windows系统分隔符</p>
+<p>FilenameUtils.equals(String filename1, String filename2) &#x2F;&#x2F; 判断文件路径是否相同，非格式化</p>
+<p>FilenameUtils.equalsNormalized(String filename1, String filename2) &#x2F;&#x2F; 判断文件路径是否相同，格式化</p>
+<p>FilenameUtils.directoryContains(String canonicalParent, String canonicalChild) &#x2F;&#x2F; 判断目录下是否包含指定文件或目录</p>
+<p>FilenameUtils.isExtension(String filename, String extension) &#x2F;&#x2F; 判断文件扩展名是否包含在指定集合(数组、字符串)中</p>
+<p>FilenameUtils.wildcardMatch(String filename, String wildcardMatcher) &#x2F;&#x2F; 判断文件扩展名是否和指定规则匹配	</p>
+
+        </div>
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Rorschach</span>
+                    </p>
+                
+                
+                
+                
+    
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/io/"># io</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2023/11/02/%E5%85%B3%E4%BA%8EWIndows-11%E6%A1%8C%E9%9D%A2%E5%9B%BE%E6%A0%87%E8%87%AA%E5%8A%A8%E5%8F%98%E5%B0%8F/">关于WIndows 11桌面图标自动变小</a>
+            
+            
+            <a class="next" rel="next" href="/2023/10/14/%E4%B8%80%E6%AC%A1%E6%94%B9%E5%96%84/">一次改善</a>
+            
+        </section>
+
+
+
+    </article>
+
+
+</div>
+_
+
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '0ad73a00ab86ccc5faef',
+        clientSecret: 'be1d314bda9d1fb1c6603dbfa58ec2215f865a54',
+        repo: 'Medicore01.github.io',
+        owner: 'Medicore01',
+        admin: 'Medicore01',
+        id: md5(location.pathname),      
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Rorschach | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+<script>
+
+!
+
+function() {
+
+function n(n, e, t) {
+
+return n.getAttribute(e) || t
+
+}
+
+function e(n) {
+
+return document.getElementsByTagName(n)
+
+}
+
+function t() {var t = e("script"),
+
+o = t.length,
+
+i = t[o - 1];
+
+return {
+
+l: o,
+
+z: n(i, "zIndex", -1), //置于主页面背后
+
+o: n(i, "opacity", .5), //线条透明度
+
+c: n(i, "color", "0,0,0"), //线条颜色
+
+n: n(i, "count", 100) //线条数量
+
+}
+
+}
+
+function o() {
+
+a = m.width = window.innerWidth ||
+
+document.documentElement.clientWidth || document.body.clientWidth,
+
+c = m.height = window.innerHeight ||
+
+document.documentElement.clientHeight || document.body.clientHeight
+
+}
+
+function i() {
+
+r.clearRect(0, 0, a, c);
+
+var n, e, t, o, m, l;
+
+s.forEach(function(i, x) {
+
+for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 :
+
+1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1,
+
+1), e = x + 1; e < u.length; e++) n = u[e],
+
+null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l
+
+= o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o,
+
+i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t /
+
+2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y),
+
+r.lineTo(n.x, n.y), r.stroke()))
+
+}),
+
+x(i)
+
+}
+
+var a, c, u, m = document.createElement("canvas"),
+
+d = t(),
+
+l = "c_n" + d.l,
+
+r = m.getContext("2d"),
+
+x = window.requestAnimationFrame || window.webkitRequestAnimationFrame
+
+|| window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
+
+window.msRequestAnimationFrame ||
+
+function(n) {
+
+window.setTimeout(n, 1e3 / 45)
+
+},
+
+w = Math.random,
+
+y = {
+
+x: null,
+
+y: null,
+
+max: 2e4
+
+};
+
+m.id = l,
+
+m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z +
+
+";opacity:" + d.o,
+
+e("body")[0].appendChild(m),
+
+o(),
+
+window.onresize = o,
+
+window.onmousemove = function(n) {
+
+n = n || window.event,
+
+y.x = n.clientX,
+
+y.y = n.clientY},
+
+window.onmouseout = function() {
+
+y.x = null,
+
+y.y = null
+
+};
+
+for (var s = [], f = 0; d.n > f; f++) {
+
+var h = w() * a,
+
+g = w() * c,
+
+v = 2 * w() - 1,
+
+p = 2 * w() - 1;
+
+s.push({
+
+x: h,
+
+y: g,
+
+xa: v,
+
+ya: p,
+
+max: 6e3
+
+})
+
+}
+
+u = s.concat([y]),
+
+setTimeout(function() {
+
+i()
+
+},
+
+100)
+
+} ();
+
+</script>
+
+</html>
