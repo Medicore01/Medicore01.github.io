@@ -224,156 +224,124 @@
         <div class="post-content">
             <p>写在之前：各种IO操作在开发过程中必不可少，如果进行手写会非常复杂繁琐，在这里对找到的相关资料进行搬运和总结，便于复习和查找</p>
 <h1 id="IOUtils（数据相关）"><a href="#IOUtils（数据相关）" class="headerlink" title="IOUtils（数据相关）"></a>IOUtils（数据相关）</h1><h3 id="拷贝方法："><a href="#拷贝方法：" class="headerlink" title="拷贝方法："></a>拷贝方法：</h3><p>copy方法有多个重载方法，满足不同的输入输出流</p>
-<p>IOUtils.copy(InputStream input, OutputStream output)</p>
-<p>IOUtils.copy(InputStream input, OutputStream output, int bufferSize)&#x2F;&#x2F;可指定缓冲区大小</p>
-<p>IOUtils.copy(InputStream input, Writer output, String inputEncoding)&#x2F;&#x2F;可指定输入流的编码表</p>
-<p>IOUtils.copy(Reader input, Writer output)</p>
-<p>IOUtils.copy(Reader input, OutputStream output, String outputEncoding)&#x2F;&#x2F;可指定输出流的编码表</p>
-<h3 id="拷贝大文件的方法："><a href="#拷贝大文件的方法：" class="headerlink" title="拷贝大文件的方法："></a>拷贝大文件的方法：</h3><p>&#x2F;&#x2F; 这个方法适合拷贝较大的数据流，比如2G以上</p>
-<p>IOUtils.copyLarge(Reader input, Writer output) &#x2F;&#x2F; 默认会用1024*4的buffer来读取</p>
-<p>IOUtils.copyLarge(Reader input, Writer output, char[] buffer)&#x2F;&#x2F;可指定缓冲区大小</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">IOUtils.copy(InputStream input, OutputStream output)</span><br><span class="line"></span><br><span class="line">IOUtils.copy(InputStream input, OutputStream output, <span class="type">int</span> bufferSize)<span class="comment">//可指定缓冲区大小</span></span><br><span class="line"></span><br><span class="line">IOUtils.copy(InputStream input, Writer output, String inputEncoding)<span class="comment">//可指定输入流的编码表</span></span><br><span class="line"></span><br><span class="line">IOUtils.copy(Reader input, Writer output)</span><br><span class="line"></span><br><span class="line">IOUtils.copy(Reader input, OutputStream output, String outputEncoding)<span class="comment">//可指定输出流的编码表</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="拷贝大文件的方法："><a href="#拷贝大文件的方法：" class="headerlink" title="拷贝大文件的方法："></a>拷贝大文件的方法：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这个方法适合拷贝较大的数据流，比如2G以上</span></span><br><span class="line"></span><br><span class="line">IOUtils.copyLarge(Reader input, Writer output) <span class="comment">// 默认会用1024*4的buffer来读取</span></span><br><span class="line"></span><br><span class="line">IOUtils.copyLarge(Reader input, Writer output, <span class="type">char</span>[] buffer)<span class="comment">//可指定缓冲区大小</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="将输入流转换成字符串"><a href="#将输入流转换成字符串" class="headerlink" title="将输入流转换成字符串"></a>将输入流转换成字符串</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">IOUtils.toString(Reader input)</span><br><span class="line"></span><br><span class="line">IOUtils.toString(<span class="type">byte</span>[] input, String encoding)</span><br><span class="line"></span><br><span class="line">IOUtils.toString(InputStream input, Charset encoding)</span><br><span class="line"></span><br><span class="line">IOUtils.toString(InputStream input, String encoding)</span><br><span class="line"></span><br><span class="line">IOUtils.toString(URI uri, String encoding)</span><br><span class="line"></span><br><span class="line">IOUtils.toString(URL url, String encoding)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="将输入流转换成字符数组"><a href="#将输入流转换成字符数组" class="headerlink" title="将输入流转换成字符数组"></a>将输入流转换成字符数组</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">IOUtils.toByteArray(InputStream input)</span><br><span class="line"></span><br><span class="line">IOUtils.toByteArray(InputStream input, <span class="type">int</span> size)</span><br><span class="line"></span><br><span class="line">IOUtils.toByteArray(URI uri)</span><br><span class="line"></span><br><span class="line">IOUtils.toByteArray(URL url)</span><br><span class="line"></span><br><span class="line">IOUtils.toByteArray(URLConnection urlConn)</span><br><span class="line"></span><br><span class="line">IOUtils.toByteArray(Reader input, String encoding)</span><br><span class="line"></span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="字符串读写"><a href="#字符串读写" class="headerlink" title="字符串读写"></a>字符串读写</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">IOUtils.readLines(Reader input)</span><br><span class="line"></span><br><span class="line">IOUtils.readLines(InputStream input, Charset encoding)</span><br><span class="line"></span><br><span class="line">IOUtils.readLines(InputStream input, String encoding)</span><br><span class="line"></span><br><span class="line">IOUtils.writeLines(Collection&lt;?&gt; lines, String lineEnding, Writer writer)</span><br><span class="line"></span><br><span class="line">IOUtils.writeLines(Collection&lt;?&gt; lines, String lineEnding, OutputStream output, Charset encoding)</span><br><span class="line"></span><br><span class="line">IOUtils.writeLines(Collection&lt;?&gt; lines, String lineEnding, OutputStream output, String encoding)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="从一个流中读取内容"><a href="#从一个流中读取内容" class="headerlink" title="从一个流中读取内容"></a>从一个流中读取内容</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">IOUtils.read(InputStream input, <span class="type">byte</span>[] buffer)</span><br><span class="line"></span><br><span class="line">IOUtils.read(InputStream input, <span class="type">byte</span>[] buffer, <span class="type">int</span> offset, <span class="type">int</span> length) IOUtils.read(Reader input, <span class="type">char</span>[] buffer)</span><br><span class="line"></span><br><span class="line">IOUtils.read(Reader input, <span class="type">char</span>[] buffer, <span class="type">int</span> offset, <span class="type">int</span> length)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="把数据写入到输出流中"><a href="#把数据写入到输出流中" class="headerlink" title="把数据写入到输出流中"></a>把数据写入到输出流中</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">IOUtils.write(<span class="type">byte</span>[] data, OutputStream output)</span><br><span class="line"></span><br><span class="line">IOUtils.write(<span class="type">byte</span>[] data, Writer output, Charset encoding)</span><br><span class="line"></span><br><span class="line">IOUtils.write(<span class="type">byte</span>[] data, Writer output, String encoding)</span><br><span class="line"></span><br><span class="line">IOUtils.write(<span class="type">char</span>[] data, Writer output)</span><br><span class="line"></span><br><span class="line">IOUtils.write(<span class="type">char</span>[] data, OutputStream output, Charset encoding)</span><br><span class="line"></span><br><span class="line">IOUtils.write(<span class="type">char</span>[] data, OutputStream output, String encoding)</span><br><span class="line"></span><br><span class="line">IOUtils.write(String data, Writer output)</span><br><span class="line"></span><br><span class="line">IOUtils.write(CharSequence data, Writer output)</span><br></pre></td></tr></table></figure>
+
 <p> </p>
-<h3 id="将输入流转换成字符串"><a href="#将输入流转换成字符串" class="headerlink" title="将输入流转换成字符串"></a>将输入流转换成字符串</h3><p>IOUtils.toString(Reader input)</p>
-<p>IOUtils.toString(byte[] input, String encoding)</p>
-<p>IOUtils.toString(InputStream input, Charset encoding)</p>
-<p>IOUtils.toString(InputStream input, String encoding)</p>
-<p>IOUtils.toString(URI uri, String encoding)</p>
-<p>IOUtils.toString(URL url, String encoding)</p>
+<h3 id="从一个流中读取内容，如果读取的长度不够，就会抛出异常"><a href="#从一个流中读取内容，如果读取的长度不够，就会抛出异常" class="headerlink" title="从一个流中读取内容，如果读取的长度不够，就会抛出异常"></a>从一个流中读取内容，如果读取的长度不够，就会抛出异常</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">IOUtils.readFully(InputStream input, <span class="type">int</span> length)</span><br><span class="line"></span><br><span class="line">IOUtils.readFully(InputStream input, <span class="type">byte</span>[] buffer)</span><br><span class="line"></span><br><span class="line">IOUtils.readFully(InputStream input, <span class="type">byte</span>[] buffer, <span class="type">int</span> offset, <span class="type">int</span> length) IOUtils.readFully(Reader input, <span class="type">char</span>[] buffer)</span><br><span class="line"></span><br><span class="line">IOUtils.readFully(Reader input, <span class="type">char</span>[] buffer, <span class="type">int</span> offset, <span class="type">int</span> length)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">IOUtils.contentEquals(InputStream input1, InputStream input2) <span class="comment">// 比较两个流是否相等</span></span><br><span class="line"></span><br><span class="line">IOUtils.contentEquals(Reader input1, Reader input2)</span><br><span class="line"></span><br><span class="line">IOUtils.contentEqualsIgnoreEOL(Reader input1, Reader input2) <span class="comment">// 比较两个流，忽略换行符</span></span><br><span class="line"></span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">IOUtils.skip(InputStream input, <span class="type">long</span> toSkip) <span class="comment">// 跳过指定长度的流</span></span><br><span class="line"></span><br><span class="line">IOUtils.skip(Reader input, <span class="type">long</span> toSkip)</span><br><span class="line"></span><br><span class="line">IOUtils.skipFully(InputStream input, <span class="type">long</span> toSkip) <span class="comment">// 如果忽略的长度大于现有的长度，就会抛出异常</span></span><br><span class="line"></span><br><span class="line">IOUtils.skipFully(Reader input, <span class="type">long</span> toSkip)</span><br></pre></td></tr></table></figure>
+
+
+
 <p> </p>
-<h3 id="将输入流转换成字符数组"><a href="#将输入流转换成字符数组" class="headerlink" title="将输入流转换成字符数组"></a>将输入流转换成字符数组</h3><p>IOUtils.toByteArray(InputStream input)</p>
-<p>IOUtils.toByteArray(InputStream input, int size)</p>
-<p>IOUtils.toByteArray(URI uri)</p>
-<p>IOUtils.toByteArray(URL url)</p>
-<p>IOUtils.toByteArray(URLConnection urlConn)</p>
-<p>IOUtils.toByteArray(Reader input, String encoding)</p>
+<h1 id="FileUtils（文件-文件夹相关）"><a href="#FileUtils（文件-文件夹相关）" class="headerlink" title="FileUtils（文件&#x2F;文件夹相关）"></a>FileUtils（文件&#x2F;文件夹相关）</h1><h3 id="复制文件夹"><a href="#复制文件夹" class="headerlink" title="复制文件夹"></a>复制文件夹</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FileUtils.copyDirectory(File srcDir, File destDir) <span class="comment">// 复制文件夹（文件夹里面的文件内容也会复制）</span></span><br><span class="line"></span><br><span class="line">FileUtils.copyDirectory(File srcDir, File destDir, FileFilter filter) <span class="comment">// 复制文件夹，带有文件过滤功能</span></span><br><span class="line"></span><br><span class="line">FileUtils.copyDirectoryToDirectory(File srcDir, File destDir) <span class="comment">// 以子目录的形式将文件夹复制到到另一个文件夹下</span></span><br></pre></td></tr></table></figure>
+
+
+
 <p> </p>
-<h3 id="字符串读写"><a href="#字符串读写" class="headerlink" title="字符串读写"></a>字符串读写</h3><p>IOUtils.readLines(Reader input)</p>
-<p>IOUtils.readLines(InputStream input, Charset encoding)</p>
-<p>IOUtils.readLines(InputStream input, String encoding)</p>
-<p>IOUtils.writeLines(Collection&lt;?&gt; lines, String lineEnding, Writer writer)</p>
-<p>IOUtils.writeLines(Collection&lt;?&gt; lines, String lineEnding, OutputStream output, Charset encoding)</p>
-<p>IOUtils.writeLines(Collection&lt;?&gt; lines, String lineEnding, OutputStream output, String encoding)</p>
-<h3 id="从一个流中读取内容"><a href="#从一个流中读取内容" class="headerlink" title="从一个流中读取内容"></a>从一个流中读取内容</h3><p>IOUtils.read(InputStream input, byte[] buffer)</p>
-<p>IOUtils.read(InputStream input, byte[] buffer, int offset, int length) IOUtils.read(Reader input, char[] buffer)</p>
-<p>IOUtils.read(Reader input, char[] buffer, int offset, int length)</p>
-<h3 id="把数据写入到输出流中"><a href="#把数据写入到输出流中" class="headerlink" title="把数据写入到输出流中"></a>把数据写入到输出流中</h3><p>IOUtils.write(byte[] data, OutputStream output)</p>
-<p>IOUtils.write(byte[] data, Writer output, Charset encoding)</p>
-<p>IOUtils.write(byte[] data, Writer output, String encoding)</p>
-<p>IOUtils.write(char[] data, Writer output)</p>
-<p>IOUtils.write(char[] data, OutputStream output, Charset encoding)</p>
-<p>IOUtils.write(char[] data, OutputStream output, String encoding)</p>
-<p>IOUtils.write(String data, Writer output)</p>
-<p>IOUtils.write(CharSequence data, Writer output)</p>
+<h3 id="复制文件"><a href="#复制文件" class="headerlink" title="复制文件"></a>复制文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">FileUtils.copyFile(File srcFile, File destFile) <span class="comment">// 复制文件</span></span><br><span class="line"></span><br><span class="line">FileUtils.copyFile(File input, OutputStream output) <span class="comment">// 复制文件到输出流</span></span><br><span class="line"></span><br><span class="line">FileUtils.copyFileToDirectory(File srcFile, File destDir) <span class="comment">// 复制文件到一个指定的目录</span></span><br><span class="line"></span><br><span class="line">FileUtils.copyInputStreamToFile(InputStream source, File destination) <span class="comment">// 把输入流里面的内容复制到指定文件</span></span><br><span class="line"></span><br><span class="line">FileUtils.copyURLToFile(URL source, File destination) <span class="comment">// 把URL 里面内容复制到文件(可以下载文件)</span></span><br><span class="line"></span><br><span class="line">FileUtils.copyURLToFile(URL source, File destination, <span class="type">int</span> connectionTimeout, <span class="type">int</span> readTimeout)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="把字符串写入文件"><a href="#把字符串写入文件" class="headerlink" title="把字符串写入文件"></a>把字符串写入文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FileUtils.writeStringToFile(File file, String data, String encoding)</span><br><span class="line"></span><br><span class="line">FileUtils.writeStringToFile(File file, String data, String encoding, <span class="type">boolean</span> append)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="把字节数组写入文件"><a href="#把字节数组写入文件" class="headerlink" title="把字节数组写入文件"></a>把字节数组写入文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FileUtils.writeByteArrayToFile(File file, <span class="type">byte</span>[] data)</span><br><span class="line"></span><br><span class="line">FileUtils.writeByteArrayToFile(File file, <span class="type">byte</span>[] data, <span class="type">boolean</span> append) FileUtils.writeByteArrayToFile(File file, <span class="type">byte</span>[] data, <span class="type">int</span> off, <span class="type">int</span> len) FileUtils.writeByteArrayToFile(File file, <span class="type">byte</span>[] data, <span class="type">int</span> off, <span class="type">int</span> len, <span class="type">boolean</span> append)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="把集合里面的内容写入文件"><a href="#把集合里面的内容写入文件" class="headerlink" title="把集合里面的内容写入文件"></a>把集合里面的内容写入文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// encoding：文件编码，lineEnding：每行以什么结尾</span></span><br><span class="line"></span><br><span class="line">FileUtils.writeLines(File file, Collection&lt;?&gt; lines)</span><br><span class="line"></span><br><span class="line">FileUtils.writeLines(File file, Collection&lt;?&gt; lines, <span class="type">boolean</span> append)</span><br><span class="line"></span><br><span class="line">FileUtils.writeLines(File file, Collection&lt;?&gt; lines, String lineEnding)</span><br><span class="line"></span><br><span class="line">FileUtils.writeLines(File file, Collection&lt;?&gt; lines, String lineEnding, <span class="type">boolean</span> append)</span><br><span class="line"></span><br><span class="line">FileUtils.writeLines(File file, String encoding, Collection&lt;?&gt; lines)</span><br><span class="line"></span><br><span class="line">FileUtils.writeLines(File file, String encoding, Collection&lt;?&gt; lines, <span class="type">boolean</span> append)</span><br><span class="line"></span><br><span class="line">FileUtils.writeLines(File file, String encoding, Collection&lt;?&gt; lines, String lineEnding)</span><br><span class="line"></span><br><span class="line">FileUtils.writeLines(File file, String encoding, Collection&lt;?&gt; lines, String lineEnding, <span class="type">boolean</span> append)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="往文件里面写内容"><a href="#往文件里面写内容" class="headerlink" title="往文件里面写内容"></a>往文件里面写内容</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">FileUtils.write(File file, CharSequence data, Charset encoding)</span><br><span class="line"></span><br><span class="line">FileUtils.write(File file, CharSequence data, Charset encoding, <span class="type">boolean</span> append)</span><br><span class="line"></span><br><span class="line">FileUtils.write(File file, CharSequence data, String encoding)</span><br><span class="line"></span><br><span class="line">FileUtils.write(File file, CharSequence data, String encoding, <span class="type">boolean</span> append)</span><br></pre></td></tr></table></figure>
+
+
+
 <p> </p>
-<h3 id="从一个流中读取内容，如果读取的长度不够，就会抛出异常"><a href="#从一个流中读取内容，如果读取的长度不够，就会抛出异常" class="headerlink" title="从一个流中读取内容，如果读取的长度不够，就会抛出异常"></a>从一个流中读取内容，如果读取的长度不够，就会抛出异常</h3><p>IOUtils.readFully(InputStream input, int length)</p>
-<p>IOUtils.readFully(InputStream input, byte[] buffer)</p>
-<p>IOUtils.readFully(InputStream input, byte[] buffer, int offset, int length) IOUtils.readFully(Reader input, char[] buffer)</p>
-<p>IOUtils.readFully(Reader input, char[] buffer, int offset, int length)</p>
-<h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h3><p>IOUtils.contentEquals(InputStream input1, InputStream input2) &#x2F;&#x2F; 比较两个流是否相等</p>
-<p>IOUtils.contentEquals(Reader input1, Reader input2)</p>
-<p>IOUtils.contentEqualsIgnoreEOL(Reader input1, Reader input2) &#x2F;&#x2F; 比较两个流，忽略换行符</p>
+<h3 id="文件移动"><a href="#文件移动" class="headerlink" title="文件移动"></a>文件移动</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">FileUtils.moveDirectory(File srcDir, File destDir) <span class="comment">// 文件夹在内的所有文件都将移动FileUtils.moveDirectoryToDirectory(File src, File destDir, boolean createDestDir) // 以子文件夹的形式移动到另外一个文件下</span></span><br><span class="line"></span><br><span class="line">FileUtils.moveFile(File srcFile, File destFile) <span class="comment">// 移动文件</span></span><br><span class="line"></span><br><span class="line">FileUtils.moveFileToDirectory(File srcFile, File destDir, <span class="type">boolean</span> createDestDir) <span class="comment">// 以子文件的形式移动到另外一个文件夹下</span></span><br><span class="line"></span><br><span class="line">FileUtils.moveToDirectory(File src, File destDir, <span class="type">boolean</span> createDestDir) <span class="comment">// 移动文件或者目录到指定的文件夹内</span></span><br><span class="line"></span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="清空和删除文件夹"><a href="#清空和删除文件夹" class="headerlink" title="清空和删除文件夹"></a>清空和删除文件夹</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">FileUtils.deleteDirectory(File directory) <span class="comment">// 删除文件夹，包括文件夹和文件夹里面所有的文件</span></span><br><span class="line"></span><br><span class="line">FileUtils.cleanDirectory(File directory) <span class="comment">// 清空文件夹里面的所有的内容</span></span><br><span class="line"></span><br><span class="line">FileUtils.forceDelete(File file) <span class="comment">// 删除，会抛出异常</span></span><br><span class="line"></span><br><span class="line">FileUtils.deleteQuietly(File file) <span class="comment">// 删除，不会抛出异常</span></span><br></pre></td></tr></table></figure>
+
+
+
 <p> </p>
-<h3 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h3><p>IOUtils.skip(InputStream input, long toSkip) &#x2F;&#x2F; 跳过指定长度的流</p>
-<p>IOUtils.skip(Reader input, long toSkip)</p>
-<p>IOUtils.skipFully(InputStream input, long toSkip) &#x2F;&#x2F; 如果忽略的长度大于现有的长度，就会抛出异常</p>
-<p>IOUtils.skipFully(Reader input, long toSkip)</p>
+<h3 id="创建文件夹"><a href="#创建文件夹" class="headerlink" title="创建文件夹"></a>创建文件夹</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FileUtils.forceMkdir(File directory) <span class="comment">// 创建文件夹(可创建多级)</span></span><br><span class="line"></span><br><span class="line">FileUtils.forceMkdirParent(File file) <span class="comment">// 创建文件的父级目录</span></span><br></pre></td></tr></table></figure>
+
+
+
 <p> </p>
-<h1 id="FileUtils（文件-文件夹相关）"><a href="#FileUtils（文件-文件夹相关）" class="headerlink" title="FileUtils（文件&#x2F;文件夹相关）"></a>FileUtils（文件&#x2F;文件夹相关）</h1><h3 id="复制文件夹"><a href="#复制文件夹" class="headerlink" title="复制文件夹"></a>复制文件夹</h3><p>FileUtils.copyDirectory(File srcDir, File destDir) &#x2F;&#x2F; 复制文件夹（文件夹里面的文件内容也会复制）</p>
-<p>FileUtils.copyDirectory(File srcDir, File destDir, FileFilter filter) &#x2F;&#x2F; 复制文件夹，带有文件过滤功能</p>
-<p>FileUtils.copyDirectoryToDirectory(File srcDir, File destDir) &#x2F;&#x2F; 以子目录的形式将文件夹复制到到另一个文件夹下</p>
+<h3 id="获取文件输入-输出流"><a href="#获取文件输入-输出流" class="headerlink" title="获取文件输入&#x2F;输出流"></a>获取文件输入&#x2F;输出流</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FileUtils.openInputStream(File file)</span><br><span class="line"></span><br><span class="line">FileUtils.openOutputStream(File file)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a>读取文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">FileUtils.readFileToByteArray(File file) <span class="comment">// 把文件读取到字节数组</span></span><br><span class="line"></span><br><span class="line">FileUtils.readFileToString(File file, Charset encoding) <span class="comment">// 把文件读取成字符串</span></span><br><span class="line"></span><br><span class="line">FileUtils.readFileToString(File file, String encoding)</span><br><span class="line"></span><br><span class="line">FileUtils.readLines(File file, Charset encoding) <span class="comment">// 把文件读取成字符串集合</span></span><br><span class="line"></span><br><span class="line">FileUtils.readLines(File file, String encoding)</span><br></pre></td></tr></table></figure>
+
+
+
 <p> </p>
-<h3 id="复制文件"><a href="#复制文件" class="headerlink" title="复制文件"></a>复制文件</h3><p>FileUtils.copyFile(File srcFile, File destFile) &#x2F;&#x2F; 复制文件</p>
-<p>FileUtils.copyFile(File input, OutputStream output) &#x2F;&#x2F; 复制文件到输出流</p>
-<p>FileUtils.copyFileToDirectory(File srcFile, File destDir) &#x2F;&#x2F; 复制文件到一个指定的目录</p>
-<p>FileUtils.copyInputStreamToFile(InputStream source, File destination) &#x2F;&#x2F; 把输入流里面的内容复制到指定文件</p>
-<p>FileUtils.copyURLToFile(URL source, File destination) &#x2F;&#x2F; 把URL 里面内容复制到文件(可以下载文件)</p>
-<p>FileUtils.copyURLToFile(URL source, File destination, int connectionTimeout, int readTimeout)</p>
+<h3 id="测试两个文件的修改时间"><a href="#测试两个文件的修改时间" class="headerlink" title="测试两个文件的修改时间"></a>测试两个文件的修改时间</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">FileUtils.isFileNewer(File file, Date date)</span><br><span class="line"></span><br><span class="line">FileUtils.isFileNewer(File file, File reference)</span><br><span class="line"></span><br><span class="line">FileUtils.isFileNewer(File file, <span class="type">long</span> timeMillis)</span><br><span class="line"></span><br><span class="line">FileUtils.isFileOlder(File file, Date date)</span><br><span class="line"></span><br><span class="line">FileUtils.isFileOlder(File file, File reference)</span><br><span class="line"></span><br><span class="line">FileUtils.isFileOlder(File file, <span class="type">long</span> timeMillis)</span><br><span class="line"></span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+
+
 <p> </p>
-<h3 id="把字符串写入文件"><a href="#把字符串写入文件" class="headerlink" title="把字符串写入文件"></a>把字符串写入文件</h3><p>FileUtils.writeStringToFile(File file, String data, String encoding)</p>
-<p>FileUtils.writeStringToFile(File file, String data, String encoding, boolean append)</p>
-<h3 id="把字节数组写入文件"><a href="#把字节数组写入文件" class="headerlink" title="把字节数组写入文件"></a>把字节数组写入文件</h3><p>FileUtils.writeByteArrayToFile(File file, byte[] data)</p>
-<p>FileUtils.writeByteArrayToFile(File file, byte[] data, boolean append) FileUtils.writeByteArrayToFile(File file, byte[] data, int off, int len) FileUtils.writeByteArrayToFile(File file, byte[] data, int off, int len, boolean append)</p>
-<h3 id="把集合里面的内容写入文件"><a href="#把集合里面的内容写入文件" class="headerlink" title="把集合里面的内容写入文件"></a>把集合里面的内容写入文件</h3><p>&#x2F;&#x2F; encoding：文件编码，lineEnding：每行以什么结尾</p>
-<p>FileUtils.writeLines(File file, Collection&lt;?&gt; lines)</p>
-<p>FileUtils.writeLines(File file, Collection&lt;?&gt; lines, boolean append)</p>
-<p>FileUtils.writeLines(File file, Collection&lt;?&gt; lines, String lineEnding)</p>
-<p>FileUtils.writeLines(File file, Collection&lt;?&gt; lines, String lineEnding, boolean append)</p>
-<p>FileUtils.writeLines(File file, String encoding, Collection&lt;?&gt; lines)</p>
-<p>FileUtils.writeLines(File file, String encoding, Collection&lt;?&gt; lines, boolean append)</p>
-<p>FileUtils.writeLines(File file, String encoding, Collection&lt;?&gt; lines, String lineEnding)</p>
-<p>FileUtils.writeLines(File file, String encoding, Collection&lt;?&gt; lines, String lineEnding, boolean append)</p>
-<h3 id="往文件里面写内容"><a href="#往文件里面写内容" class="headerlink" title="往文件里面写内容"></a>往文件里面写内容</h3><p>FileUtils.write(File file, CharSequence data, Charset encoding)</p>
-<p>FileUtils.write(File file, CharSequence data, Charset encoding, boolean append)</p>
-<p>FileUtils.write(File file, CharSequence data, String encoding)</p>
-<p>FileUtils.write(File file, CharSequence data, String encoding, boolean append)</p>
+<h3 id="文件-文件夹的迭代"><a href="#文件-文件夹的迭代" class="headerlink" title="文件&#x2F;文件夹的迭代"></a>文件&#x2F;文件夹的迭代</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">FileUtils.iterateFiles(File directory, IOFileFilter fileFilter, IOFileFilter dirFilter)</span><br><span class="line"></span><br><span class="line">FileUtils.iterateFiles(File directory, String[] extensions, <span class="type">boolean</span> recursive)</span><br><span class="line"></span><br><span class="line">FileUtils.iterateFilesAndDirs(File directory, IOFileFilter fileFilter, IOFileFilter dirFilter)</span><br><span class="line"></span><br><span class="line">FileUtils.lineIterator(File file)</span><br><span class="line"></span><br><span class="line">FileUtils.lineIterator(File file, String encoding)</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">FileUtils.listFiles(File directory, IOFileFilter fileFilter, IOFileFilter dirFilter)</span><br><span class="line"></span><br><span class="line">FileUtils.listFiles(File directory, String[] extensions, <span class="type">boolean</span> recursive)</span><br><span class="line"></span><br><span class="line">FileUtils.listFilesAndDirs(File directory, IOFileFilter fileFilter, IOFileFilter dirFilter)</span><br></pre></td></tr></table></figure>
+
+
+
 <p> </p>
-<h3 id="文件移动"><a href="#文件移动" class="headerlink" title="文件移动"></a>文件移动</h3><p>FileUtils.moveDirectory(File srcDir, File destDir) &#x2F;&#x2F; 文件夹在内的所有文件都将移动FileUtils.moveDirectoryToDirectory(File src, File destDir, boolean createDestDir) &#x2F;&#x2F; 以子文件夹的形式移动到另外一个文件下</p>
-<p>FileUtils.moveFile(File srcFile, File destFile) &#x2F;&#x2F; 移动文件</p>
-<p>FileUtils.moveFileToDirectory(File srcFile, File destDir, boolean createDestDir) &#x2F;&#x2F; 以子文件的形式移动到另外一个文件夹下</p>
-<p>FileUtils.moveToDirectory(File src, File destDir, boolean createDestDir) &#x2F;&#x2F; 移动文件或者目录到指定的文件夹内</p>
-<p> </p>
-<h3 id="清空和删除文件夹"><a href="#清空和删除文件夹" class="headerlink" title="清空和删除文件夹"></a>清空和删除文件夹</h3><p>FileUtils.deleteDirectory(File directory) &#x2F;&#x2F; 删除文件夹，包括文件夹和文件夹里面所有的文件</p>
-<p>FileUtils.cleanDirectory(File directory) &#x2F;&#x2F; 清空文件夹里面的所有的内容</p>
-<p>FileUtils.forceDelete(File file) &#x2F;&#x2F; 删除，会抛出异常</p>
-<p>FileUtils.deleteQuietly(File file) &#x2F;&#x2F; 删除，不会抛出异常</p>
-<p> </p>
-<h3 id="创建文件夹"><a href="#创建文件夹" class="headerlink" title="创建文件夹"></a>创建文件夹</h3><p>FileUtils.forceMkdir(File directory) &#x2F;&#x2F; 创建文件夹(可创建多级)</p>
-<p>FileUtils.forceMkdirParent(File file) &#x2F;&#x2F; 创建文件的父级目录</p>
-<p> </p>
-<h3 id="获取文件输入-输出流"><a href="#获取文件输入-输出流" class="headerlink" title="获取文件输入&#x2F;输出流"></a>获取文件输入&#x2F;输出流</h3><p>FileUtils.openInputStream(File file)</p>
-<p>FileUtils.openOutputStream(File file)</p>
-<h3 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a>读取文件</h3><p>FileUtils.readFileToByteArray(File file) &#x2F;&#x2F; 把文件读取到字节数组</p>
-<p>FileUtils.readFileToString(File file, Charset encoding) &#x2F;&#x2F; 把文件读取成字符串</p>
-<p>FileUtils.readFileToString(File file, String encoding)</p>
-<p>FileUtils.readLines(File file, Charset encoding) &#x2F;&#x2F; 把文件读取成字符串集合</p>
-<p>FileUtils.readLines(File file, String encoding)</p>
-<p> </p>
-<h3 id="测试两个文件的修改时间"><a href="#测试两个文件的修改时间" class="headerlink" title="测试两个文件的修改时间"></a>测试两个文件的修改时间</h3><p>FileUtils.isFileNewer(File file, Date date)</p>
-<p>FileUtils.isFileNewer(File file, File reference)</p>
-<p>FileUtils.isFileNewer(File file, long timeMillis)</p>
-<p>FileUtils.isFileOlder(File file, Date date)</p>
-<p>FileUtils.isFileOlder(File file, File reference)</p>
-<p>FileUtils.isFileOlder(File file, long timeMillis)</p>
-<p> </p>
-<p> </p>
-<h3 id="文件-文件夹的迭代"><a href="#文件-文件夹的迭代" class="headerlink" title="文件&#x2F;文件夹的迭代"></a>文件&#x2F;文件夹的迭代</h3><p>FileUtils.iterateFiles(File directory, IOFileFilter fileFilter, IOFileFilter dirFilter)</p>
-<p>FileUtils.iterateFiles(File directory, String[] extensions, boolean recursive)</p>
-<p>FileUtils.iterateFilesAndDirs(File directory, IOFileFilter fileFilter, IOFileFilter dirFilter)</p>
-<p>FileUtils.lineIterator(File file)</p>
-<p>FileUtils.lineIterator(File file, String encoding)</p>
-<p> </p>
-<p>FileUtils.listFiles(File directory, IOFileFilter fileFilter, IOFileFilter dirFilter)</p>
-<p>FileUtils.listFiles(File directory, String[] extensions, boolean recursive)</p>
-<p>FileUtils.listFilesAndDirs(File directory, IOFileFilter fileFilter, IOFileFilter dirFilter)</p>
-<p> </p>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>FileUtils.isSymlink(File file) &#x2F;&#x2F; 判断是否是符号链接</p>
-<p>FileUtils.directoryContains(File directory, File child) &#x2F;&#x2F; 判断文件夹内是否包含某个文件或者文件夹</p>
-<p> FileUtils.sizeOf(File file) &#x2F;&#x2F; 获取文件或者文件夹的大小</p>
-<p>FileUtils.getTempDirectory()&#x2F;&#x2F; 获取临时目录文件</p>
-<p>FileUtils.getTempDirectoryPath()&#x2F;&#x2F; 获取临时目录路径</p>
-<p>FileUtils.getUserDirectory()&#x2F;&#x2F; 获取用户目录文件</p>
-<p>FileUtils.getUserDirectoryPath()&#x2F;&#x2F; 获取用户目录路径</p>
-<p>FileUtils.touch(File file) &#x2F;&#x2F; 创建文件</p>
-<p>FileUtils.contentEquals(File file1, File file2) &#x2F;&#x2F; 比较两个文件内容是否相同</p>
-<h1 id="FilenameUtils（文件名-后缀名相关）"><a href="#FilenameUtils（文件名-后缀名相关）" class="headerlink" title="FilenameUtils（文件名&#x2F;后缀名相关）"></a>FilenameUtils（文件名&#x2F;后缀名相关）</h1><p>FilenameUtils.concat(String basePath, String fullFilenameToAdd) &#x2F;&#x2F; 合并目录和文件名为文件全路径</p>
-<p>FilenameUtils.getBaseName(String filename) &#x2F;&#x2F; 去除目录和后缀后的文件名</p>
-<p>FilenameUtils.getExtension(String filename) &#x2F;&#x2F; 获取文件的后缀</p>
-<p>FilenameUtils.getFullPath(String filename) &#x2F;&#x2F; 获取文件的目录</p>
-<p>FilenameUtils.getName(String filename) &#x2F;&#x2F; 获取文件名</p>
-<p>FilenameUtils.getPath(String filename) &#x2F;&#x2F; 去除盘符后的路径</p>
-<p>FilenameUtils.getPrefix(String filename) &#x2F;&#x2F; 盘符</p>
-<p>FilenameUtils.indexOfExtension(String filename) &#x2F;&#x2F; 获取最后一个.的位置</p>
-<p>FilenameUtils.indexOfLastSeparator(String filename) &#x2F;&#x2F; 获取最后一个&#x2F;的位置</p>
-<p>FilenameUtils.normalize(String filename) &#x2F;&#x2F; 获取当前系统格式化路径</p>
-<p>FilenameUtils.removeExtension(String filename) &#x2F;&#x2F; 移除文件的扩展名</p>
-<p>FilenameUtils.separatorsToSystem(String path) &#x2F;&#x2F; 转换分隔符为当前系统分隔符</p>
-<p>FilenameUtils.separatorsToUnix(String path) &#x2F;&#x2F; 转换分隔符为linux系统分隔符</p>
-<p>FilenameUtils.separatorsToWindows(String path) &#x2F;&#x2F; 转换分隔符为windows系统分隔符</p>
-<p>FilenameUtils.equals(String filename1, String filename2) &#x2F;&#x2F; 判断文件路径是否相同，非格式化</p>
-<p>FilenameUtils.equalsNormalized(String filename1, String filename2) &#x2F;&#x2F; 判断文件路径是否相同，格式化</p>
-<p>FilenameUtils.directoryContains(String canonicalParent, String canonicalChild) &#x2F;&#x2F; 判断目录下是否包含指定文件或目录</p>
-<p>FilenameUtils.isExtension(String filename, String extension) &#x2F;&#x2F; 判断文件扩展名是否包含在指定集合(数组、字符串)中</p>
-<p>FilenameUtils.wildcardMatch(String filename, String wildcardMatcher) &#x2F;&#x2F; 判断文件扩展名是否和指定规则匹配	</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">FileUtils.isSymlink(File file) <span class="comment">// 判断是否是符号链接</span></span><br><span class="line"></span><br><span class="line">FileUtils.directoryContains(File directory, File child) <span class="comment">// 判断文件夹内是否包含某个文件或者文件夹</span></span><br><span class="line"></span><br><span class="line"> FileUtils.sizeOf(File file) <span class="comment">// 获取文件或者文件夹的大小</span></span><br><span class="line"></span><br><span class="line">FileUtils.getTempDirectory()<span class="comment">// 获取临时目录文件</span></span><br><span class="line"></span><br><span class="line">FileUtils.getTempDirectoryPath()<span class="comment">// 获取临时目录路径</span></span><br><span class="line"></span><br><span class="line">FileUtils.getUserDirectory()<span class="comment">// 获取用户目录文件</span></span><br><span class="line"></span><br><span class="line">FileUtils.getUserDirectoryPath()<span class="comment">// 获取用户目录路径</span></span><br><span class="line"></span><br><span class="line">FileUtils.touch(File file) <span class="comment">// 创建文件</span></span><br><span class="line"></span><br><span class="line">FileUtils.contentEquals(File file1, File file2) <span class="comment">// 比较两个文件内容是否相同</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+<h1 id="FilenameUtils（文件名-后缀名相关）"><a href="#FilenameUtils（文件名-后缀名相关）" class="headerlink" title="FilenameUtils（文件名&#x2F;后缀名相关）"></a>FilenameUtils（文件名&#x2F;后缀名相关）</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">FilenameUtils.concat(String basePath, String fullFilenameToAdd) <span class="comment">// 合并目录和文件名为文件全路径</span></span><br><span class="line"></span><br><span class="line">FilenameUtils.getBaseName(String filename) <span class="comment">// 去除目录和后缀后的文件名</span></span><br><span class="line"></span><br><span class="line">FilenameUtils.getExtension(String filename) <span class="comment">// 获取文件的后缀</span></span><br><span class="line"></span><br><span class="line">FilenameUtils.getFullPath(String filename) <span class="comment">// 获取文件的目录</span></span><br><span class="line"></span><br><span class="line">FilenameUtils.getName(String filename) <span class="comment">// 获取文件名</span></span><br><span class="line"></span><br><span class="line">FilenameUtils.getPath(String filename) <span class="comment">// 去除盘符后的路径</span></span><br><span class="line"></span><br><span class="line">FilenameUtils.getPrefix(String filename) <span class="comment">// 盘符</span></span><br><span class="line"></span><br><span class="line">FilenameUtils.indexOfExtension(String filename) <span class="comment">// 获取最后一个.的位置</span></span><br><span class="line"></span><br><span class="line">FilenameUtils.indexOfLastSeparator(String filename) <span class="comment">// 获取最后一个/的位置</span></span><br><span class="line"></span><br><span class="line">FilenameUtils.normalize(String filename) <span class="comment">// 获取当前系统格式化路径</span></span><br><span class="line"></span><br><span class="line">FilenameUtils.removeExtension(String filename) <span class="comment">// 移除文件的扩展名</span></span><br><span class="line"></span><br><span class="line">FilenameUtils.separatorsToSystem(String path) <span class="comment">// 转换分隔符为当前系统分隔符</span></span><br><span class="line"></span><br><span class="line">FilenameUtils.separatorsToUnix(String path) <span class="comment">// 转换分隔符为linux系统分隔符</span></span><br><span class="line"></span><br><span class="line">FilenameUtils.separatorsToWindows(String path) <span class="comment">// 转换分隔符为windows系统分隔符</span></span><br><span class="line"></span><br><span class="line">FilenameUtils.equals(String filename1, String filename2) <span class="comment">// 判断文件路径是否相同，非格式化</span></span><br><span class="line"></span><br><span class="line">FilenameUtils.equalsNormalized(String filename1, String filename2) <span class="comment">// 判断文件路径是否相同，格式化</span></span><br><span class="line"></span><br><span class="line">FilenameUtils.directoryContains(String canonicalParent, String canonicalChild) <span class="comment">// 判断目录下是否包含指定文件或目录</span></span><br><span class="line"></span><br><span class="line">FilenameUtils.isExtension(String filename, String extension) <span class="comment">// 判断文件扩展名是否包含在指定集合(数组、字符串)中</span></span><br><span class="line"></span><br><span class="line">FilenameUtils.wildcardMatch(String filename, String wildcardMatcher) <span class="comment">// 判断文件扩展名是否和指定规则匹配	</span></span><br></pre></td></tr></table></figure>
+
 
         </div>
         
