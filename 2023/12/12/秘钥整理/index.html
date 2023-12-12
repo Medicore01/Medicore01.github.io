@@ -12,7 +12,7 @@
 
 
 
-<title>Archives | Rorschach&#39;s Blog</title>
+<title>秘钥整理 | Rorschach&#39;s Blog</title>
 
 
 
@@ -125,35 +125,181 @@
     }
 </script>
             <div class="main">
-                <div class="post-wrap archive">
+                <div class="container">
     
     
-        
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
 
-        
-            <h3>2023</h3>
-        
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
 
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2023/09/27/javaweb%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E7%B1%BB/">javaweb开发过程中常用的类</a>
-            <span class="archive-item-date">September 27, 2023</span>
-        </article>
-    
-        
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
 
-        
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
 
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2023/09/26/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">第一篇博客</a>
-            <span class="archive-item-date">September 26, 2023</span>
-        </article>
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
     
+
     
-    <nav class="pagination">
-        <a class="page-number" href="/archives/">1</a><span class="page-number current">2</span>
-    </nav>
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">秘钥整理</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Rorschach</a>
+                    
+    
+                    
+                        <span class="post-time">
+                        Date: <a href="#">December 12, 2023&nbsp;&nbsp;16:25:36</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/">学习总结</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+    
+        <div class="post-content">
+            <p>这里汇集一些收集到的秘钥</p>
+<h4 id="Windows8-专业版-企业版-MAK激活密钥：-Key-："><a href="#Windows8-专业版-企业版-MAK激活密钥：-Key-：" class="headerlink" title="Windows8 专业版&#x2F;企业版 MAK激活密钥：[Key]："></a>Windows8 专业版&#x2F;企业版 MAK激活密钥：[Key]：</h4><p>WNVDK-39VBK-WBCKC-4BHDG-BPWX2  [剩余次数：700+];</p>
+<p>XNGVB-TMQH3-R36W6-QG92D-WQG7C  [剩余次数：800+];</p>
+<p>BHCNC-7FGJV-K4YGH-G8FM7-G6JX2  [剩余次数：300+];</p>
+<p>NF7XW-RV6PY-TWBM4-6RGHJ-J8CK2 [剩余次数：400+]</p>
+<h4 id="Windows-Server-2012-R2-Retail-Key：-Key-："><a href="#Windows-Server-2012-R2-Retail-Key：-Key-：" class="headerlink" title="Windows Server 2012 R2 Retail  Key：[Key]："></a>Windows Server 2012 R2 Retail  Key：[Key]：</h4><p>NH3KG-P864D-XYCJH-82DMH-4CX8M –  Standard[Key];</p>
+<p>KPXD3-FDN73-2XYRP-9GCRW-TQ6PB –  Standard[Key];</p>
+<p>TPQN8-XRYYC-VDRQ8-9XK7F-TVHJM – Standard</p>
+
+        </div>
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Rorschach</span>
+                    </p>
+                
+                
+                
+                
+    
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E7%A7%98%E9%92%A5/"># 秘钥</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2023/11/02/%E5%85%B3%E4%BA%8EWIndows-11%E6%A1%8C%E9%9D%A2%E5%9B%BE%E6%A0%87%E8%87%AA%E5%8A%A8%E5%8F%98%E5%B0%8F/">关于WIndows 11桌面图标自动变小</a>
+            
+        </section>
+
+
+
+    </article>
+
 
 </div>
+_
+
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '0ad73a00ab86ccc5faef',
+        clientSecret: 'be1d314bda9d1fb1c6603dbfa58ec2215f865a54',
+        repo: 'Medicore01.github.io',
+        owner: 'Medicore01',
+        admin: 'Medicore01',
+        id: md5(location.pathname),      
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
             </div>
             <footer id="footer" class="footer">
     <div class="copyright">
