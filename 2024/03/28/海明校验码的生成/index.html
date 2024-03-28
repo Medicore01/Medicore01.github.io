@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Rorschach">
+
+
+
+
+
+<title>海明校验码的生成 | Rorschach&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/21.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+    
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Rorschach&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Rorschach&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">海明校验码的生成</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Rorschach</a>
+                    
+    
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 28, 2024&nbsp;&nbsp;17:20:45</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/">学习总结</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+    
+        <div class="post-content">
+            <p>要想生成海明校验码一共需要完成以下四步：</p>
+<ul>
+<li><p>确定海明校验位的位数</p>
+</li>
+<li><p>确定校验位的位置</p>
+</li>
+<li><p>确定校验位的值</p>
+</li>
+<li><p>得出海明编码：信息位+校验位</p>
+</li>
+</ul>
+<h2 id="1-确定海明检验位的位数"><a href="#1-确定海明检验位的位数" class="headerlink" title="1. 确定海明检验位的位数"></a>1. 确定海明检验位的位数</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;首先需要对待编码信息进行分组，每组一个检验位。假设待编码信息K位，分成r组，则：</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;校验位个数为:r位，海明编码总长:N&#x3D;k+r位。代码检验时，每组能产生1个指误码，若分成了r组，则指误码为r位，可能的指误代码有(2<sup>r</sup>-1)种。例如，现假设分成了4组（r&#x3D;4），则有4位指误码G4，G3，G2，G1； 24种可能的指误代码如0000、0001、0010、….</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若指误码为全0则说明海明编码无错，其余(2^r-1)种指误代码分别用于指示(2<sup>r</sup>-1)种只有1位错的情况。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;海明检验位的位数与待编码信息的分组是直接相关的，k位有效信息位，r位奇偶校验位，k+r位新的海明编码需满足关系式： <strong>2<sup>r</sup> -1≧k+r</strong>，其中r要取满足该不等式的最小值。</p>
+<h2 id="2-确定校验位的位置"><a href="#2-确定校验位的位置" class="headerlink" title="2.确定校验位的位置"></a>2.确定校验位的位置</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;假设一段待编码信息为 01110011010，采用偶校验。01110011010 共11位，所以k&#x3D;11，满足上述关系式的最小r应是4。那么海明校验码共有11+4&#x3D;15位.由此可确定初步的表格：</p>
+<table>
+<thead>
+<tr>
+<th align="center">码字位置</th>
+<th>15</th>
+<th>14</th>
+<th>13</th>
+<th>12</th>
+<th>11</th>
+<th>10</th>
+<th>9</th>
+<th>8</th>
+<th>7</th>
+<th>6</th>
+<th>5</th>
+<th>4</th>
+<th>3</th>
+<th>2</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">信息位</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="center">校验位</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;校验位记为Pi（i&#x3D;1，2，…，r)，分别位于第2<sup>(i-1)</sup> （i&#x3D;1,2,…，r)位上，其余位依次放置被校验的数据位。</p>
+<table>
+<thead>
+<tr>
+<th align="center">码字位置</th>
+<th>15</th>
+<th>14</th>
+<th>13</th>
+<th>12</th>
+<th>11</th>
+<th>10</th>
+<th>9</th>
+<th>8</th>
+<th>7</th>
+<th>6</th>
+<th>5</th>
+<th>4</th>
+<th>3</th>
+<th>2</th>
+<th align="right">1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">信息位</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td></td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td></td>
+<td>0</td>
+<td></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="center">校验位</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>√</td>
+<td></td>
+<td></td>
+<td></td>
+<td>√</td>
+<td></td>
+<td>√</td>
+<td align="right">√</td>
+</tr>
+<tr>
+<td align="center">复合码字</td>
+<td>d15</td>
+<td>d14</td>
+<td>d13</td>
+<td>d12</td>
+<td>d11</td>
+<td>d10</td>
+<td>d9</td>
+<td>P8</td>
+<td>d7</td>
+<td>d6</td>
+<td>d5</td>
+<td>P4</td>
+<td>d3</td>
+<td>P2</td>
+<td align="right">P1</td>
+</tr>
+</tbody></table>
+<h2 id="3-确定校验位的值"><a href="#3-确定校验位的值" class="headerlink" title="3.确定校验位的值"></a>3.确定校验位的值</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分组原则：有效信息位的下标等于所有参与校验该位的校验位下标之和。即：要校验的信息位的位置 i 等于校验位的位置值相加。例如：有效信息位d3，3&#x3D;2+1，表明第3位分别位于P1和P2所形成的校验组里。由此原则得到每一个位置相对应的校验位表,如下：</p>
+<table>
+<thead>
+<tr>
+<th>信息位的位置</th>
+<th>对应校验位的位置值相加</th>
+<th>位于校验位对应的校验组</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d3</td>
+<td>3&#x3D;1+2</td>
+<td>P1，P2</td>
+</tr>
+<tr>
+<td>d5</td>
+<td>5&#x3D;1+4</td>
+<td>P1，P4</td>
+</tr>
+<tr>
+<td>d6</td>
+<td>6&#x3D;2+4</td>
+<td>P2，P4</td>
+</tr>
+<tr>
+<td>d7</td>
+<td>7&#x3D;1+2+4</td>
+<td>P1，P2，P4</td>
+</tr>
+<tr>
+<td>d9</td>
+<td>9&#x3D;1+8</td>
+<td>P1，P8</td>
+</tr>
+<tr>
+<td>d10</td>
+<td>10&#x3D;2+8</td>
+<td>P2，P8</td>
+</tr>
+<tr>
+<td>d11</td>
+<td>11&#x3D;1+2+8</td>
+<td>P1，P2，P8</td>
+</tr>
+<tr>
+<td>d12</td>
+<td>12&#x3D;4+8</td>
+<td>P4，P8</td>
+</tr>
+<tr>
+<td>d13</td>
+<td>13&#x3D;1+4+8</td>
+<td>P1，P4，P8</td>
+</tr>
+<tr>
+<td>d14</td>
+<td>14&#x3D;2+4+8</td>
+<td>P2，P4，P8</td>
+</tr>
+<tr>
+<td>d15</td>
+<td>15&#x3D;1+2+4+8</td>
+<td>P1，P2，P4，P8</td>
+</tr>
+</tbody></table>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每个校验位参与了哪些信息位的偶校验呢？就可写出分组方案：</p>
+<center>P1=(d3,d5,d7,d9,d11,d13,d15)=0</center>         
+<center>P2=(d3,d6,d7,d10,d11,d14,d15)=0</center>
+<center>P4=(d5,d6,d7,d12,d13,d14,d15)=1</center>
+<center>  P8=(d9,d10,d11,d12,d13,d14,d15)=0</center>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这样就得到了各个校验位的值。</p>
+<h2 id="4-得出海明编码：信息位-校验位"><a href="#4-得出海明编码：信息位-校验位" class="headerlink" title="4. 得出海明编码：信息位+校验位"></a>4. 得出海明编码：信息位+校验位</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;将各个校验位放置到其指定的位置上，得到海明编码为011100101011000</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;指误字G&#x3D;G4G3G2G1</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;G1&#x3D;d15&oplus;d13&oplus;d11&oplus;d9&oplus;d7&oplus;d5&oplus;d3&oplus;P1	 </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;G2&#x3D;d15&oplus;d14&oplus;d11&oplus;d10&oplus;d7&oplus;d6&oplus;d3&oplus;P2  </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;G3&#x3D;d15&oplus;d14&oplus;d13&oplus;d12&oplus;d7&oplus;d6&oplus;d5&oplus;P4 </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;G4&#x3D;d15&oplus;d14&oplus;d13&oplus;d12&oplus;d11&oplus;d10&oplus;d9&oplus;P8</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;假设d6位出错则G1&#x3D;0，G2&#x3D;1，G3&#x3D;1，G4&#x3D;0，指误字G&#x3D;0110，其中指误字0110指示的是d6位置。要想纠正错误，只需对d6位进行求反操作。</p>
+
+        </div>
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Rorschach</span>
+                    </p>
+                
+                
+                
+                
+    
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E4%B8%8E%E5%8E%9F%E7%90%86/"># 计算机组成与原理</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2024/03/27/test/">test</a>
+            
+        </section>
+
+
+
+    </article>
+
+
+</div>
+_
+
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '0ad73a00ab86ccc5faef',
+        clientSecret: 'be1d314bda9d1fb1c6603dbfa58ec2215f865a54',
+        repo: 'Medicore01.github.io',
+        owner: 'Medicore01',
+        admin: 'Medicore01',
+        id: md5(location.pathname),      
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Rorschach | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+<script>
+
+!
+
+function() {
+
+function n(n, e, t) {
+
+return n.getAttribute(e) || t
+
+}
+
+function e(n) {
+
+return document.getElementsByTagName(n)
+
+}
+
+function t() {var t = e("script"),
+
+o = t.length,
+
+i = t[o - 1];
+
+return {
+
+l: o,
+
+z: n(i, "zIndex", -1), //置于主页面背后
+
+o: n(i, "opacity", .5), //线条透明度
+
+c: n(i, "color", "0,0,0"), //线条颜色
+
+n: n(i, "count", 100) //线条数量
+
+}
+
+}
+
+function o() {
+
+a = m.width = window.innerWidth ||
+
+document.documentElement.clientWidth || document.body.clientWidth,
+
+c = m.height = window.innerHeight ||
+
+document.documentElement.clientHeight || document.body.clientHeight
+
+}
+
+function i() {
+
+r.clearRect(0, 0, a, c);
+
+var n, e, t, o, m, l;
+
+s.forEach(function(i, x) {
+
+for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 :
+
+1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1,
+
+1), e = x + 1; e < u.length; e++) n = u[e],
+
+null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l
+
+= o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o,
+
+i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t /
+
+2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y),
+
+r.lineTo(n.x, n.y), r.stroke()))
+
+}),
+
+x(i)
+
+}
+
+var a, c, u, m = document.createElement("canvas"),
+
+d = t(),
+
+l = "c_n" + d.l,
+
+r = m.getContext("2d"),
+
+x = window.requestAnimationFrame || window.webkitRequestAnimationFrame
+
+|| window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
+
+window.msRequestAnimationFrame ||
+
+function(n) {
+
+window.setTimeout(n, 1e3 / 45)
+
+},
+
+w = Math.random,
+
+y = {
+
+x: null,
+
+y: null,
+
+max: 2e4
+
+};
+
+m.id = l,
+
+m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z +
+
+";opacity:" + d.o,
+
+e("body")[0].appendChild(m),
+
+o(),
+
+window.onresize = o,
+
+window.onmousemove = function(n) {
+
+n = n || window.event,
+
+y.x = n.clientX,
+
+y.y = n.clientY},
+
+window.onmouseout = function() {
+
+y.x = null,
+
+y.y = null
+
+};
+
+for (var s = [], f = 0; d.n > f; f++) {
+
+var h = w() * a,
+
+g = w() * c,
+
+v = 2 * w() - 1,
+
+p = 2 * w() - 1;
+
+s.push({
+
+x: h,
+
+y: g,
+
+xa: v,
+
+ya: p,
+
+max: 6e3
+
+})
+
+}
+
+u = s.concat([y]),
+
+setTimeout(function() {
+
+i()
+
+},
+
+100)
+
+} ();
+
+</script>
+
+</html>
