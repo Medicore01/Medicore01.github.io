@@ -353,7 +353,7 @@ i()
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
     <script> function snow() { 
         //1、定义一片雪花模板 
-        var flake = $("<div>").css({ "position": "absolute", "color": "#666" }).html("☣"); 
+        var flake = $("<div>").css({ "position": "absolute", "z-index":"-1", "color": "#666" }).html("☣"); 
         //获取页面的宽度，利用这个数来算出，雪花开始时left的值 
         var documentWidth = $(document).width(); 
         //获取页面的高度 相当于雪花下落结束时Y轴的位置 
