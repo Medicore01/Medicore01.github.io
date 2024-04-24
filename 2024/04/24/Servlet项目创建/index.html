@@ -12,7 +12,7 @@
 
 
 
-<title>海明校验码的生成 | Rorschach&#39;s Blog</title>
+<title>Servlet项目创建 | Rorschach&#39;s Blog</title>
 
 
 
@@ -130,76 +130,11 @@
                 <div class="container">
     
     
-        <div class="post-toc">
-    <div class="tocbot-list">
-    </div>
-    <div class="tocbot-list-menu">
-        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
-        <a onclick="go_top()">Back to top</a>
-        <a onclick="go_bottom()">Go to bottom</a>
-    </div>
-</div>
-
-<script>
-    var tocbot_timer;
-    var DEPTH_MAX = 6; // 为 6 时展开所有
-    var tocbot_default_config = {
-        tocSelector: '.tocbot-list',
-        contentSelector: '.post-content',
-        headingSelector: 'h1, h2, h3, h4, h5',
-        orderedList: false,
-        scrollSmooth: true,
-        onClick: extend_click,
-    };
-
-    function extend_click() {
-        clearTimeout(tocbot_timer);
-        tocbot_timer = setTimeout(function() {
-            tocbot.refresh(obj_merge(tocbot_default_config, {
-                hasInnerContainers: true
-            }));
-        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
-    }
-
-    document.ready(function() {
-        tocbot.init(obj_merge(tocbot_default_config, {
-            collapseDepth: 1
-        }));
-    });
-
-    function expand_toc() {
-        var b = document.querySelector('.tocbot-toc-expand');
-        var expanded = b.getAttribute('data-expanded');
-        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
-        tocbot.refresh(obj_merge(tocbot_default_config, {
-            collapseDepth: expanded ? 1 : DEPTH_MAX
-        }));
-        b.innerText = expanded ? 'Expand all' : 'Collapse all';
-    }
-
-    function go_top() {
-        window.scrollTo(0, 0);
-    }
-
-    function go_bottom() {
-        window.scrollTo(0, document.body.scrollHeight);
-    }
-
-    function obj_merge(target, source) {
-        for (var item in source) {
-            if (source.hasOwnProperty(item)) {
-                target[item] = source[item];
-            }
-        }
-        return target;
-    }
-</script>
-    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">海明校验码的生成</h1>
+            <h1 class="post-title">Servlet项目创建</h1>
             
                 <div class="post-meta">
                     
@@ -208,14 +143,14 @@
     
                     
                         <span class="post-time">
-                        Date: <a href="#">March 28, 2024&nbsp;&nbsp;17:20:45</a>
+                        Date: <a href="#">April 24, 2024&nbsp;&nbsp;20:44:21</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/">学习总结</a>
+                                <a href="/categories/%E5%B0%8F%E8%AE%B0/">小记</a>
                             
                         </span>
                     
@@ -224,237 +159,10 @@
         </header>
     
         <div class="post-content">
-            <p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/2694bf57-65c4-4cda-9c4e-89021ab19366.png"></p>
-<p>要想生成海明校验码一共需要完成以下四步：</p>
-<ul>
-<li><p>确定海明校验位的位数</p>
-</li>
-<li><p>确定校验位的位置</p>
-</li>
-<li><p>确定校验位的值</p>
-</li>
-<li><p>得出海明编码：信息位+校验位</p>
-</li>
-</ul>
-<h2 id="1-确定海明检验位的位数"><a href="#1-确定海明检验位的位数" class="headerlink" title="1. 确定海明检验位的位数"></a>1. 确定海明检验位的位数</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;首先需要对待编码信息进行分组，每组一个检验位。假设待编码信息K位，分成r组，则：</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;校验位个数为:r位，海明编码总长:N&#x3D;k+r位。代码检验时，每组能产生1个指误码，若分成了r组，则指误码为r位，可能的指误代码有(2<sup>r</sup>-1)种。例如，现假设分成了4组（r&#x3D;4），则有4位指误码G4，G3，G2，G1； 24种可能的指误代码如0000、0001、0010、….</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若指误码为全0则说明海明编码无错，其余(2^r-1)种指误代码分别用于指示(2<sup>r</sup>-1)种只有1位错的情况。</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;海明检验位的位数与待编码信息的分组是直接相关的，k位有效信息位，r位奇偶校验位，k+r位新的海明编码需满足关系式： <strong>2<sup>r</sup> -1≧k+r</strong>，其中r要取满足该不等式的最小值。</p>
-<h2 id="2-确定校验位的位置"><a href="#2-确定校验位的位置" class="headerlink" title="2.确定校验位的位置"></a>2.确定校验位的位置</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;假设一段待编码信息为 01110011010，采用偶校验。01110011010 共11位，所以k&#x3D;11，满足上述关系式的最小r应是4。那么海明校验码共有11+4&#x3D;15位.由此可确定初步的表格：</p>
-<table>
-<thead>
-<tr>
-<th align="center">码字位置</th>
-<th>15</th>
-<th>14</th>
-<th>13</th>
-<th>12</th>
-<th>11</th>
-<th>10</th>
-<th>9</th>
-<th>8</th>
-<th>7</th>
-<th>6</th>
-<th>5</th>
-<th>4</th>
-<th>3</th>
-<th>2</th>
-<th>1</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">信息位</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td align="center">校验位</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;校验位记为Pi（i&#x3D;1，2，…，r)，分别位于第2<sup>(i-1)</sup> （i&#x3D;1,2,…，r)位上，其余位依次放置被校验的数据位。</p>
-<table>
-<thead>
-<tr>
-<th align="center">码字位置</th>
-<th>15</th>
-<th>14</th>
-<th>13</th>
-<th>12</th>
-<th>11</th>
-<th>10</th>
-<th>9</th>
-<th>8</th>
-<th>7</th>
-<th>6</th>
-<th>5</th>
-<th>4</th>
-<th>3</th>
-<th>2</th>
-<th align="right">1</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">信息位</td>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td></td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td></td>
-<td>0</td>
-<td></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td align="center">校验位</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>√</td>
-<td></td>
-<td></td>
-<td></td>
-<td>√</td>
-<td></td>
-<td>√</td>
-<td align="right">√</td>
-</tr>
-<tr>
-<td align="center">复合码字</td>
-<td>d15</td>
-<td>d14</td>
-<td>d13</td>
-<td>d12</td>
-<td>d11</td>
-<td>d10</td>
-<td>d9</td>
-<td>P8</td>
-<td>d7</td>
-<td>d6</td>
-<td>d5</td>
-<td>P4</td>
-<td>d3</td>
-<td>P2</td>
-<td align="right">P1</td>
-</tr>
-</tbody></table>
-<h2 id="3-确定校验位的值"><a href="#3-确定校验位的值" class="headerlink" title="3.确定校验位的值"></a>3.确定校验位的值</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分组原则：有效信息位的下标等于所有参与校验该位的校验位下标之和。即：要校验的信息位的位置 i 等于校验位的位置值相加。例如：有效信息位d3，3&#x3D;2+1，表明第3位分别位于P1和P2所形成的校验组里。由此原则得到每一个位置相对应的校验位表,如下：</p>
-<table>
-<thead>
-<tr>
-<th>信息位的位置</th>
-<th>对应校验位的位置值相加</th>
-<th>位于校验位对应的校验组</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>d3</td>
-<td>3&#x3D;1+2</td>
-<td>P1，P2</td>
-</tr>
-<tr>
-<td>d5</td>
-<td>5&#x3D;1+4</td>
-<td>P1，P4</td>
-</tr>
-<tr>
-<td>d6</td>
-<td>6&#x3D;2+4</td>
-<td>P2，P4</td>
-</tr>
-<tr>
-<td>d7</td>
-<td>7&#x3D;1+2+4</td>
-<td>P1，P2，P4</td>
-</tr>
-<tr>
-<td>d9</td>
-<td>9&#x3D;1+8</td>
-<td>P1，P8</td>
-</tr>
-<tr>
-<td>d10</td>
-<td>10&#x3D;2+8</td>
-<td>P2，P8</td>
-</tr>
-<tr>
-<td>d11</td>
-<td>11&#x3D;1+2+8</td>
-<td>P1，P2，P8</td>
-</tr>
-<tr>
-<td>d12</td>
-<td>12&#x3D;4+8</td>
-<td>P4，P8</td>
-</tr>
-<tr>
-<td>d13</td>
-<td>13&#x3D;1+4+8</td>
-<td>P1，P4，P8</td>
-</tr>
-<tr>
-<td>d14</td>
-<td>14&#x3D;2+4+8</td>
-<td>P2，P4，P8</td>
-</tr>
-<tr>
-<td>d15</td>
-<td>15&#x3D;1+2+4+8</td>
-<td>P1，P2，P4，P8</td>
-</tr>
-</tbody></table>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每个校验位参与了哪些信息位的偶校验呢？就可写出分组方案：</p>
-<center>P1=(d3,d5,d7,d9,d11,d13,d15)=0</center>         
-<center>P2=(d3,d6,d7,d10,d11,d14,d15)=0</center>
-<center>P4=(d5,d6,d7,d12,d13,d14,d15)=1</center>
-<center>  P8=(d9,d10,d11,d12,d13,d14,d15)=0</center>
-
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这样就得到了各个校验位的值。</p>
-<h2 id="4-得出海明编码：信息位-校验位"><a href="#4-得出海明编码：信息位-校验位" class="headerlink" title="4. 得出海明编码：信息位+校验位"></a>4. 得出海明编码：信息位+校验位</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;将各个校验位放置到其指定的位置上，得到海明编码为011100101011000</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;指误字G&#x3D;G4G3G2G1</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;G1&#x3D;d15&oplus;d13&oplus;d11&oplus;d9&oplus;d7&oplus;d5&oplus;d3&oplus;P1	 </p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;G2&#x3D;d15&oplus;d14&oplus;d11&oplus;d10&oplus;d7&oplus;d6&oplus;d3&oplus;P2  </p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;G3&#x3D;d15&oplus;d14&oplus;d13&oplus;d12&oplus;d7&oplus;d6&oplus;d5&oplus;P4 </p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;G4&#x3D;d15&oplus;d14&oplus;d13&oplus;d12&oplus;d11&oplus;d10&oplus;d9&oplus;P8</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;假设d6位出错则G1&#x3D;0，G2&#x3D;1，G3&#x3D;1，G4&#x3D;0，指误字G&#x3D;0110，其中指误字0110指示的是d6位置。要想纠正错误，只需对d6位进行求反操作。</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;初学者在刚接触 Servlet项目时很容易遇到404状态，现在容易查到的许多解决方案都是较为古老落后的，现在的 IDEA 功能非常强大，并不需要去从头依次进行配置。当把 Tomcat配置好过后就可以很轻松的创建 Servlet项目了。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这里记录一个很容易忽略的问题，那就是不同的 Tomcat版本要与语言版本相匹配，否则 Servlet项目是无法正常运行的，产生的错误为运行项目状态为404，如果不知道是语言版本不匹配的话光是排查错误就会耗费大量时间，因为许多错误操作或配置都会导致404的结果。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果Tomcat的版本是10.以前，那么在创建项目时要选择 Java EE，如果是10.以后，则选择Jakarta EE。</p>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/499626e2-28ff-460f-97b4-895800b97d7f.png"></p>
 
         </div>
         
@@ -477,7 +185,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E4%B8%8E%E5%8E%9F%E7%90%86/"># 计算机组成与原理</a>
+                        <a href="/tags/%E5%BC%80%E5%8F%91/"># 开发</a>
                     
                         
                 </span>
@@ -490,10 +198,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2024/04/24/Servlet%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA/">Servlet项目创建</a>
             
-            
-            <a class="next" rel="next" href="/2024/03/27/Happydays/">Happydays</a>
+            <a class="next" rel="next" href="/2024/03/28/%E6%B5%B7%E6%98%8E%E6%A0%A1%E9%AA%8C%E7%A0%81%E7%9A%84%E7%94%9F%E6%88%90/">海明校验码的生成</a>
             
         </section>
 
