@@ -451,7 +451,7 @@ i()
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
     <script> function snow() { 
         //1、定义一片雪花模板 
-        var flake = $("<div>").css({ "position": "absolute", "z-index":"-1", "color": "#666" }).html("☣"); 
+        var flake = $("<div>").css({ "position": "absolute", "z-index":"-1", "color": "#00F" }).html("🐟"); 
         //获取页面的宽度，利用这个数来算出，雪花开始时left的值 
         var documentWidth = $(document).width(); 
         //获取页面的高度 相当于雪花下落结束时Y轴的位置 
@@ -467,7 +467,7 @@ i()
             //随机生成雪花大小 
             var flakeSize = 20 + 20 * Math.random(); 
             //随机生成雪花下落持续时间 
-            var durationTime = 6000 + 7000 * Math.random(); 
+            var durationTime = 7000 + 7000 * Math.random(); 
             //随机生成雪花下落 开始 时的透明度 
             var startOpacity = 0.7 + 0.3 * Math.random(); 
             //随机生成雪花下落 结束 时的透明度 
