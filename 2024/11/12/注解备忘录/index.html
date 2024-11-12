@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Rorschach">
+
+
+
+
+
+<title>注解备忘录 | Rorschach&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/21.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+<body>
+
+
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+    
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Rorschach&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">🐳Posts</a>
+                
+                    <a class="menu-item" href="/category">🐝Categories</a>
+                
+                    <a class="menu-item" href="/tag">🐸Tags</a>
+                
+                    <a class="menu-item" href="/about">🦀About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Rorschach&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">🐳Posts</a>
+                
+                    <a class="menu-item" href="/category">🐝Categories</a>
+                
+                    <a class="menu-item" href="/tag">🐸Tags</a>
+                
+                    <a class="menu-item" href="/about">🦀About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">注解备忘录</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Rorschach</a>
+                    
+    
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 12, 2024&nbsp;&nbsp;20:09:23</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/">学习总结</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+    
+        <div class="post-content">
+            <h1 id="超全spring、spring-boot-注解备忘录-37个常用注解使用说明"><a href="#超全spring、spring-boot-注解备忘录-37个常用注解使用说明" class="headerlink" title="超全spring、spring boot 注解备忘录(37个常用注解使用说明)"></a>超全spring、spring boot 注解备忘录(37个常用注解使用说明)</h1><p>这篇文章是关于 Spring 和 Spring Boot 中 37 个常用注解的使用说明及详细解释，包括主类标记、组件定义、请求处理、作用域、异步任务、定时任务、条件注册、配置文件相关等方面，还提供了大量示例代码辅助理解。</p>
+<table>
+<thead>
+<tr>
+<th>注解</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@SpringBootApplication</td>
+<td>标记<code>Spring</code>应用程序的主类。组合<code>@Configuration</code>、<code>@EnableAutoConfiguration</code>和<code>@ComponentScan</code>。这是您的应用程序开始的地方</td>
+</tr>
+<tr>
+<td>@Component</td>
+<td>将类标记为Spring组件，使其成为托管bean</td>
+</tr>
+<tr>
+<td>@Service</td>
+<td>服务层类的特殊类型@Component，通常包含业务逻辑</td>
+</tr>
+<tr>
+<td>@Repository</td>
+<td>用于数据仓库类的特殊类型的 @Component。启用异常转换</td>
+</tr>
+<tr>
+<td>@Controller</td>
+<td>用于处理 Web 请求的 Spring MVC 控制器的特殊类型 @Component。</td>
+</tr>
+<tr>
+<td>@RestController</td>
+<td>结合了 @Controller 和 @ResponseBody。处理 Web 请求并直接返回 JSON/XML 响应</td>
+</tr>
+<tr>
+<td>@Autowired</td>
+<td>自动将依赖项注入到字段、setter 方法或构造函数中</td>
+</tr>
+<tr>
+<td>@Value</td>
+<td>将属性文件中的值插入字段、setter方法或构造函数参数</td>
+</tr>
+<tr>
+<td>@Configuration</td>
+<td>指示一个类声明一个或多个@Bean方法，并且可以被Spring容器处理以生成bean定义和服务请求</td>
+</tr>
+<tr>
+<td>@Bean</td>
+<td>声明一个方法，该方法返回Spring容器管理的Spring bean</td>
+</tr>
+<tr>
+<td>@EnableAutoConfiguration</td>
+<td>根据类路径中存在的依赖项自动配置Spring应用程序</td>
+</tr>
+<tr>
+<td>@ComponentScan</td>
+<td>配置用于@Configuration类的组件扫描指令。指定要扫描带注释组件的基包。</td>
+</tr>
+<tr>
+<td>@RequestMapping</td>
+<td>将Web请求映射到特定的处理程序类或处理程序方法。</td>
+</tr>
+<tr>
+<td>@GetMapping</td>
+<td>为@RequestMapping(method = RequestMethod.GET)添加标签。处理GET请求。</td>
+</tr>
+<tr>
+<td>@PostMapping</td>
+<td>为@RequestMapping(method = RequestMethod.POST)添加标签。处理POST请求。</td>
+</tr>
+<tr>
+<td>@PutMapping</td>
+<td>为@RequestMapping(method = RequestMethod.PUT)添加标签。处理PUT请求。</td>
+</tr>
+<tr>
+<td>@DeleteMapping</td>
+<td>为@RequestMapping(method = RequestMethod.DELETE)添加标签。处理DELETE请求。</td>
+</tr>
+<tr>
+<td>@PatchMapping</td>
+<td>为@RequestMapping(method = RequestMethod.PATCH)添加标签。处理PATCH请求。</td>
+</tr>
+<tr>
+<td>@RequestParam</td>
+<td>将Web请求参数绑定到方法参数。</td>
+</tr>
+<tr>
+<td>@PathVariable</td>
+<td>将URI模板变量绑定到方法参数。</td>
+</tr>
+<tr>
+<td>@ResponseBody</td>
+<td>将返回的对象序列化为指定格式（通常是 JSON 格式）并将其作为响应主体返回。</td>
+</tr>
+<tr>
+<td>@CrossOrigin</td>
+<td>在方法或类上启用跨域资源共享（CORS）</td>
+</tr>
+<tr>
+<td>@ExceptionHandler</td>
+<td>定义一个方法来处理由请求处理程序方法引发的异常</td>
+</tr>
+<tr>
+<td>@ControllerAdvice</td>
+<td>允许您处理整个应用程序中的异常，而不仅仅是单个控制器</td>
+</tr>
+<tr>
+<td>@RestControllerAdvice</td>
+<td>组合@ControllerAdvice和@ResponseBody。REST控制器</td>
+</tr>
+<tr>
+<td>@RequestScope</td>
+<td>表示 Bean 具有请求作用域</td>
+</tr>
+<tr>
+<td>@SessionScope</td>
+<td>表示 Bean 是会话作用域的</td>
+</tr>
+<tr>
+<td>@ApplicationScope</td>
+<td>指示bean是应用程序范围的</td>
+</tr>
+<tr>
+<td>@SessionAttributes</td>
+<td>用于在会话中存储模型属性</td>
+</tr>
+<tr>
+<td>@ModelAttribute</td>
+<td>将方法参数或方法返回值绑定到命名的模型属性上</td>
+</tr>
+<tr>
+<td>@Async</td>
+<td>表示方法应异步执行</td>
+</tr>
+<tr>
+<td>@Scheduled</td>
+<td>使用 cron 表达式或固定延迟/速率标记要调度的方法</td>
+</tr>
+<tr>
+<td>@EnableScheduling</td>
+<td>启用对定时任务的支持</td>
+</tr>
+<tr>
+<td>@Conditional</td>
+<td>根据条件注册bean</td>
+</tr>
+<tr>
+<td>@Profile</td>
+<td>仅当指定的配置文件处于活动状态时才注册 Bean</td>
+</tr>
+<tr>
+<td>@MockBean</td>
+<td>在 Spring 应用程序上下文中mock bean（与 Spring Boot 一起用于测试）</td>
+</tr>
+<tr>
+<td>@SpyBean</td>
+<td>在 Spring 应用程序上下文中创建 spy Bean（与 Spring Boot 一起用于测试）</td>
+</tr>
+</tbody></table>
+<h2 id="详细说明及用法"><a href="#详细说明及用法" class="headerlink" title="详细说明及用法"></a>详细说明及用法</h2><h3 id="SpringBootApplication"><a href="#SpringBootApplication" class="headerlink" title="@SpringBootApplication"></a>@SpringBootApplication</h3><p>标记Spring靴子应用程序的主类。结合<code>@Configuration</code>、<code>@EnableAutoConfiguration</code>和<code>@ComponentScan</code></p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MySpringBootApplication</span> {</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> {</span><br><span class="line">        SpringApplication.run(MySpringBootApplication.class, args);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="Component"><a href="#Component" class="headerlink" title="@Component"></a>@Component</h3><p>将类标记为Spring组件，使其成为托管bean</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyComponent</span> {</span><br><span class="line">    <span class="comment">// Bean methods and properties</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="Service"><a href="#Service" class="headerlink" title="@Service"></a>@Service</h3><p>@Component的特殊类型，用于服务层类，通常包含业务逻辑。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyService</span> {</span><br><span class="line">    <span class="comment">// Business logic methods</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="Repository"><a href="#Repository" class="headerlink" title="@Repository"></a>@Repository</h3><p>数据存储库类的特殊类型@Component。启用异常转换</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyRepository</span> {</span><br><span class="line">    <span class="comment">// Data access methods</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="Controller"><a href="#Controller" class="headerlink" title="@Controller"></a>@Controller</h3><p>用于处理Web请求的Spring MVC控制器的特殊类型@Component</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyController</span> {</span><br><span class="line">    <span class="meta">@RequestMapping("/hello")</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">sayHello</span><span class="params">()</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"hello"</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="RestController"><a href="#RestController" class="headerlink" title="@RestController"></a>@RestController</h3><p>组合@Controller和@ResponseBody。处理Web请求并直接返回JSON/XML响应。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyRestController</span> {</span><br><span class="line">    <span class="meta">@GetMapping("/hello")</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">sayHello</span><span class="params">()</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"hello"</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="Autowired"><a href="#Autowired" class="headerlink" title="@Autowired"></a>@Autowired</h3><p>自动将依赖项注入到字段、setter方法或构造函数中</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyComponent</span> {</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> MyService myService;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Use myService in methods</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="Value"><a href="#Value" class="headerlink" title="@Value"></a>@Value</h3><p>将属性文件中的值插入字段、setter方法或构造函数参数</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyComponent</span> {</span><br><span class="line">    <span class="meta">@Value("${app.name}")</span></span><br><span class="line">    <span class="keyword">private</span> String appName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Use appName in methods</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="Configuration"><a href="#Configuration" class="headerlink" title="@Configuration"></a>@Configuration</h3><p>指示一个类声明一个或多个@Bean方法，并且可以被Spring容器处理以生成bean定义和服务请求</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyConfig</span> {</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> MyService <span class="title function_">myService</span><span class="params">()</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">MyService</span>();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="Bean"><a href="#Bean" class="headerlink" title="@Bean"></a>@Bean</h3><p>声明一个方法，该方法返回Spring容器管理的Spring bean</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyConfig</span> {</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> MyService <span class="title function_">myService</span><span class="params">()</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">MyService</span>();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="EnableAutoConfiguration"><a href="#EnableAutoConfiguration" class="headerlink" title="@EnableAutoConfiguration"></a>@EnableAutoConfiguration</h3><p>根据类路径中存在的依赖项自动配置Spring应用程序</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MySpringBootApplication</span> {</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> {</span><br><span class="line">        SpringApplication.run(MySpringBootApplication.class, args);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<blockquote>
+<p>SpringBootApplication是一个组合注解，组合了<code>@EnableAutoConfiguration</code></p>
+</blockquote>
+<h3 id="ComponentScan"><a href="#ComponentScan" class="headerlink" title="@ComponentScan"></a>@ComponentScan</h3><p>配置用于<code>@Configuration</code>类的组件扫描指令。指定要扫描带注释组件的基包。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ComponentScan(basePackages = "com.example")</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyConfig</span> {</span><br><span class="line">    <span class="comment">// Configuration methods</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="RequestMapping"><a href="#RequestMapping" class="headerlink" title="@RequestMapping"></a>@RequestMapping</h3><p>将Web请求映射到特定的处理程序类或处理程序方法。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyController</span> {</span><br><span class="line">    <span class="meta">@RequestMapping("/hello")</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">sayHello</span><span class="params">()</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"hello"</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="GetMapping"><a href="#GetMapping" class="headerlink" title="@GetMapping"></a>@GetMapping</h3><p>为@RequestMapping(method = RequestMethod.GET)添加标签。处理GET请求。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyRestController</span> {</span><br><span class="line">    <span class="meta">@GetMapping("/greet")</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">greet</span><span class="params">()</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Hello, World!"</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="PostMapping"><a href="#PostMapping" class="headerlink" title="@PostMapping"></a>@PostMapping</h3><p>为@RequestMapping(method = RequestMethod.POST)添加标签。处理POST请求。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyRestController</span> {</span><br><span class="line">    <span class="meta">@PostMapping("/create")</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">create</span><span class="params">(<span class="meta">@RequestBody</span> MyEntity entity)</span> {</span><br><span class="line">        <span class="comment">// Process entity</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Created"</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="PutMapping"><a href="#PutMapping" class="headerlink" title="@PutMapping"></a>@PutMapping</h3><p>为@RequestMapping(method = RequestMethod.PUT)添加标签。处理PUT请求。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyRestController</span> {</span><br><span class="line">    <span class="meta">@PutMapping("/update")</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">update</span><span class="params">(<span class="meta">@RequestBody</span> MyEntity entity)</span> {</span><br><span class="line">        <span class="comment">// Update entity</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Updated"</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="DeleteMapping"><a href="#DeleteMapping" class="headerlink" title="@DeleteMapping"></a>@DeleteMapping</h3><p>为@RequestMapping(method = RequestMethod.DELETE)添加标签。处理DELETE请求。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyRestController</span> {</span><br><span class="line">    <span class="meta">@DeleteMapping("/delete/{id}")</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">delete</span><span class="params">(<span class="meta">@PathVariable</span> Long id)</span> {</span><br><span class="line">        <span class="comment">// Delete entity by id</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Deleted"</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="PatchMapping"><a href="#PatchMapping" class="headerlink" title="@PatchMapping"></a>@PatchMapping</h3><p>为@RequestMapping(method = RequestMethod.PATCH)添加标签。处理PATCH请求。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyRestController</span> {</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@PatchMapping("/patch")</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">patch</span><span class="params">(<span class="meta">@RequestBody</span> MyEntity entity)</span> {</span><br><span class="line">        <span class="comment">// Patch entity</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Patched"</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="RequestParam"><a href="#RequestParam" class="headerlink" title="@RequestParam"></a>@RequestParam</h3><p>将Web请求参数绑定到方法参数。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyRestController</span> {</span><br><span class="line">    <span class="meta">@GetMapping("/param")</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">param</span><span class="params">(<span class="meta">@RequestParam</span> String name)</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Hello, "</span> + name;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="PathVariable"><a href="#PathVariable" class="headerlink" title="@PathVariable"></a>@PathVariable</h3><p>将URI模板变量绑定到方法参数。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码</span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyRestController</span> {</span><br><span class="line">    <span class="meta">@GetMapping("/path/{id}")</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">path</span><span class="params">(<span class="meta">@PathVariable</span> Long id)</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"ID: "</span> + id;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="RequestBody"><a href="#RequestBody" class="headerlink" title="@RequestBody"></a>@RequestBody</h3><p>将HTTP请求的<code>json body</code>绑定到方法参数。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyRestController</span> {</span><br><span class="line">    <span class="meta">@PostMapping("/body")</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">body</span><span class="params">(<span class="meta">@RequestBody</span> MyEntity entity)</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Received: "</span> + entity;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="ResponseBody"><a href="#ResponseBody" class="headerlink" title="@ResponseBody"></a>@ResponseBody</h3><p>将返回的对象序列化为指定格式（通常是 JSON 格式）并将其作为响应主体返回。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyController</span> {</span><br><span class="line">    <span class="meta">@RequestMapping("/json")</span></span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">json</span><span class="params">()</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"{"</span>message<span class="string">":"</span>Hello, World!<span class="string">"}"</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="CrossOrigin"><a href="#CrossOrigin" class="headerlink" title="@CrossOrigin"></a>@CrossOrigin</h3><p>在方法或类上启用跨域资源共享（CORS）</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@CrossOrigin(origins = "http://example.com")</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyRestController</span> {</span><br><span class="line">    <span class="meta">@GetMapping("/cors")</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">cors</span><span class="params">()</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"CORS Enabled"</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="ExceptionHandler"><a href="#ExceptionHandler" class="headerlink" title="@ExceptionHandler"></a>@ExceptionHandler</h3><p>定义一个方法来处理由请求处理程序方法引发的异常</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyController</span> {</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@ExceptionHandler(Exception.class)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">handleException</span><span class="params">()</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"error"</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<blockquote>
+<p>仅对<code>MyController</code>生效</p>
+</blockquote>
+<h3 id="ControllerAdvice"><a href="#ControllerAdvice" class="headerlink" title="@ControllerAdvice"></a>@ControllerAdvice</h3><p>允许您处理整个应用程序中的异常，而不仅仅是单个控制器</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@ControllerAdvice</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">GlobalExceptionHandler</span> {</span><br><span class="line">    <span class="meta">@ExceptionHandler(Exception.class)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">handleException</span><span class="params">()</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"error"</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<blockquote>
+<p>对所有<code>controller</code>生效</p>
+</blockquote>
+<h3 id="RestControllerAdvice"><a href="#RestControllerAdvice" class="headerlink" title="@RestControllerAdvice"></a>@RestControllerAdvice</h3><p>组合@ControllerAdvice和@ResponseBody。REST控制器</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@RestControllerAdvice</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">GlobalRestExceptionHandler</span> {</span><br><span class="line">    <span class="meta">@ExceptionHandler(Exception.class)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">handleException</span><span class="params">()</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"{"</span>error<span class="string">":"</span>An error occurred<span class="string">"}"</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="RequestScope"><a href="#RequestScope" class="headerlink" title="@RequestScope"></a>@RequestScope</h3><p>@RequestScope 注解在 Spring 框架中用于定义 Bean 的作用域，使得每个 HTTP 请求都有实例化的独立 Bean。这意味着在同一个请求过程中，一个带有 @RequestScope 的 Bean 实例会被共享，但在不同的请求中会创建新的实例</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@Component</span></span><br><span class="line"><span class="meta">@RequestScope</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyRequestScopedBean</span> {</span><br><span class="line">    <span class="comment">// Bean methods and properties</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="SessionScope"><a href="#SessionScope" class="headerlink" title="@SessionScope"></a>@SessionScope</h3><p><code>@SessionScope</code> 注解在 <code>Spring</code> 框架中用于定义 Bean 的作用域，使得每个 HTTP 会话都有实例化的独立 Bean。这意味着在同一个会话过程中，一个带有 <code>@SessionScope</code> 的 Bean 实例会被共享，但在不同的会话中会创建新的实例</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@Component</span></span><br><span class="line"><span class="meta">@SessionScope</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MySessionScopedBean</span> {</span><br><span class="line">    <span class="comment">// Bean methods and properties</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="ApplicationScope"><a href="#ApplicationScope" class="headerlink" title="@ApplicationScope"></a>@ApplicationScope</h3><p><code>@ApplicationScope</code> 注解在 <code>Spring</code> 框架中用于定义 Bean 的作用域，使得每个应用程序上下文都有实例化的独立 Bean。这意味着在同一个应用程序上下文中，一个带有 <code>@ApplicationScope</code> 的 Bean 实例会被共享，但在不同的应用程序上下文中会创建新的实例</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@Component</span></span><br><span class="line"><span class="meta">@ApplicationScope</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyApplicationScopedBean</span> {</span><br><span class="line">    <span class="comment">// Bean methods and properties</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="SessionAttributes"><a href="#SessionAttributes" class="headerlink" title="@SessionAttributes"></a>@SessionAttributes</h3><p><code>@SessionAttributes</code> 注解用于在会话中存储模型属性。这些属性在多个请求之间共享，并且在会话结束时删除</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@SessionAttributes("user")</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyController</span> {</span><br><span class="line">    <span class="meta">@ModelAttribute("user")</span></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">createUser</span><span class="params">()</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="ModelAttribute"><a href="#ModelAttribute" class="headerlink" title="@ModelAttribute"></a>@ModelAttribute</h3><p><code>@ModelAttribute</code> 注解用于将方法参数或方法返回值绑定到命名的模型属性上</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyController</span> {</span><br><span class="line">    <span class="meta">@ModelAttribute("attribute")</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">addAttribute</span><span class="params">()</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"value"</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="Async"><a href="#Async" class="headerlink" title="@Async"></a>@Async</h3><p><code>@Async</code> 注解表示方法应异步执行</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyService</span> {</span><br><span class="line">    <span class="meta">@Async</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">asyncMethod</span><span class="params">()</span> {</span><br><span class="line">        <span class="comment">// Async method logic</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="Scheduled"><a href="#Scheduled" class="headerlink" title="@Scheduled"></a>@Scheduled</h3><p><code>@Scheduled</code> 注解使用 cron 表达式或固定延迟/速率标记要调度的方法</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyScheduledTask</span> {</span><br><span class="line">    <span class="meta">@Scheduled(cron = "0 0 * * * ?")</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">scheduledMethod</span><span class="params">()</span> {</span><br><span class="line">        <span class="comment">// Scheduled task logic</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="EnableScheduling"><a href="#EnableScheduling" class="headerlink" title="@EnableScheduling"></a>@EnableScheduling</h3><p><code>@EnableScheduling</code> 注解启用对定时任务的支持</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableScheduling</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyConfig</span> {</span><br><span class="line">    <span class="comment">// Configuration methods</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="Conditional"><a href="#Conditional" class="headerlink" title="@Conditional"></a>@Conditional</h3><p><code>@Conditional</code> 注解根据条件注册 bean</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyConfig</span> {</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@Conditional(MyCondition.class)</span></span><br><span class="line">    <span class="keyword">public</span> MyService <span class="title function_">myService</span><span class="params">()</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">MyService</span>();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="Profile"><a href="#Profile" class="headerlink" title="@Profile"></a>@Profile</h3><p><code>@Profile</code> 注解仅当指定的配置文件处于活动状态时才注册 Bean</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@Profile("dev")</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DevConfig</span> {</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> MyService <span class="title function_">myService</span><span class="params">()</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">MyService</span>();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="MockBean"><a href="#MockBean" class="headerlink" title="@MockBean"></a>@MockBean</h3><p><code>@MockBean</code> 注解在 Spring 应用程序上下文中 mock bean（与 Spring Boot 一起用于测试）</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyTest</span> {</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@MockBean</span></span><br><span class="line">    <span class="keyword">private</span> MyService myService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> {</span><br><span class="line">        <span class="comment">// Test logic</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="SpyBean"><a href="#SpyBean" class="headerlink" title="@SpyBean"></a>@SpyBean</h3><p><code>@SpyBean</code> 注解在 Spring 应用程序上下文中创建 spy Bean（与 Spring Boot 一起用于测试）</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">java代码解读复制代码<span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyTest</span> {</span><br><span class="line">    <span class="meta">@SpyBean</span></span><br><span class="line">    <span class="keyword">private</span> MyService myService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> {</span><br><span class="line">        <span class="comment">// Test logic</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+
+        </div>
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Rorschach</span>
+                    </p>
+                
+                
+                
+                
+    
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/springboot/"># springboot</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2024/07/25/%E9%9A%8F%E7%AC%94/">随笔</a>
+            
+        </section>
+
+
+
+    </article>
+
+
+</div>
+_
+
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '0ad73a00ab86ccc5faef',
+        clientSecret: 'be1d314bda9d1fb1c6603dbfa58ec2215f865a54',
+        repo: 'Medicore01.github.io',
+        owner: 'Medicore01',
+        admin: 'Medicore01',
+        id: md5(location.pathname),      
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Rorschach  
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<span class="site-pv">
+
+ | 总访问量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+
+</span>
+
+  
+           </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+<script>
+
+!
+
+function() {
+
+function n(n, e, t) {
+
+return n.getAttribute(e) || t
+
+}
+
+function e(n) {
+
+return document.getElementsByTagName(n)
+
+}
+
+function t() {var t = e("script"),
+
+o = t.length,
+
+i = t[o - 1];
+
+return {
+
+l: o,
+
+z: n(i, "zIndex", -1), //置于主页面背后
+
+o: n(i, "opacity", .5), //线条透明度
+
+c: n(i, "color", "0,0,0"), //线条颜色
+
+n: n(i, "count", 120) //线条数量
+
+}
+
+}
+
+function o() {
+
+a = m.width = window.innerWidth ||
+
+document.documentElement.clientWidth || document.body.clientWidth,
+
+c = m.height = window.innerHeight ||
+
+document.documentElement.clientHeight || document.body.clientHeight
+
+}
+
+function i() {
+
+r.clearRect(0, 0, a, c);
+
+var n, e, t, o, m, l;
+
+s.forEach(function(i, x) {
+
+for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 :
+
+1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1,
+
+1), e = x + 1; e < u.length; e++) n = u[e],
+
+null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l
+
+= o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o,
+
+i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t /
+
+2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y),
+
+r.lineTo(n.x, n.y), r.stroke()))
+
+}),
+
+x(i)
+
+}
+
+var a, c, u, m = document.createElement("canvas"),
+
+d = t(),
+
+l = "c_n" + d.l,
+
+r = m.getContext("2d"),
+
+x = window.requestAnimationFrame || window.webkitRequestAnimationFrame
+
+|| window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
+
+window.msRequestAnimationFrame ||
+
+function(n) {
+
+window.setTimeout(n, 1e3 / 45)
+
+},
+
+w = Math.random,
+
+y = {
+
+x: null,
+
+y: null,
+
+max: 2e4
+
+};
+
+m.id = l,
+
+m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z +
+
+";opacity:" + d.o,
+
+e("body")[0].appendChild(m),
+
+o(),
+
+window.onresize = o,
+
+window.onmousemove = function(n) {
+
+n = n || window.event,
+
+y.x = n.clientX,
+
+y.y = n.clientY},
+
+window.onmouseout = function() {
+
+y.x = null,
+
+y.y = null
+
+};
+
+for (var s = [], f = 0; d.n > f; f++) {
+
+var h = w() * a,
+
+g = w() * c,
+
+v = 2 * w() - 1,
+
+p = 2 * w() - 1;
+
+s.push({
+
+x: h,
+
+y: g,
+
+xa: v,
+
+ya: p,
+
+max: 6e3
+
+})
+
+}
+
+u = s.concat([y]),
+
+setTimeout(function() {
+
+i()
+
+},
+
+100)
+
+} ();
+
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <script> function snow() { 
+        //1、定义一片雪花模板 
+        var flake = $("<div>").css({ "position": "absolute", "z-index":"-1", "color": "#00F" }).html("🍁"); 
+        //获取页面的宽度，利用这个数来算出，雪花开始时left的值 
+        var documentWidth = $(document).width(); 
+        //获取页面的高度 相当于雪花下落结束时Y轴的位置 
+        var documentHieght = $(document).height(); 
+        //定义生成一片雪花的毫秒数 
+        var millisec = 500; 
+        //2、设置第一个定时器，周期性定时器，每隔一段时间（millisec）生成一片雪花； 
+        setInterval(function() { 
+            //随机生成雪花下落 开始 时left的值，相当于开始时X轴的位置 
+            var startLeft = Math.random() * documentWidth; 
+            //随机生成雪花下落 结束 时left的值，相当于结束时X轴的位置 
+            var endLeft = Math.random() * documentWidth; 
+            //随机生成雪花大小 
+            var flakeSize = 20 + 20 * Math.random(); 
+            //随机生成雪花下落持续时间 
+            var durationTime = 7000 + 7000 * Math.random(); 
+            //随机生成雪花下落 开始 时的透明度 
+            var startOpacity = 0.7 + 0.3 * Math.random(); 
+            //随机生成雪花下落 结束 时的透明度 
+            var endOpacity = 0.2 + 0.2 * Math.random(); 
+            //3、克隆一个雪花模板,定义雪花的初始样式，拼接到页面中 
+            flake.clone().appendTo($("body")).css({ "left": startLeft, "opacity": startOpacity, "font-size": flakeSize, "top": "-25px", }).animate({ 
+                //执行动画 
+                "left": endLeft, "opacity": endOpacity, "top": documentHieght }, durationTime, function() { 
+                    //4、当雪花落下后，删除雪花。 
+                    $(this).remove(); 
+            });
+        }, millisec); 
+    }; 
+    snow(); 
+</script>
+</html>
