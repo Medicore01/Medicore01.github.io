@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
 <meta name="viewport"
@@ -12,7 +12,7 @@
 
 
 
-<title>利用 Mysql Workbench生成EER图 | Rorschach&#39;s Blog</title>
+<title>一些有趣的网站(摸鱼时刻) | Rorschach&#39;s Blog</title>
 
 
 
@@ -130,11 +130,76 @@
                 <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">利用 Mysql Workbench生成EER图</h1>
+            <h1 class="post-title">一些有趣的网站(摸鱼时刻)</h1>
             
                 <div class="post-meta">
                     
@@ -143,14 +208,14 @@
     
                     
                         <span class="post-time">
-                        Date: <a href="#">March 26, 2024&nbsp;&nbsp;14:12:00</a>
+                        Date: <a href="#">九月 30, 2023&nbsp;&nbsp;17:10:04</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/">学习总结</a>
+                                <a href="/categories/%E5%85%B6%E4%BB%96/">其他</a>
                             
                         </span>
                     
@@ -159,24 +224,71 @@
         </header>
     
         <div class="post-content">
-            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EER图可以较为直观的观察设计出的表相互之间的联系，这里使用 Workbnench 来演示如何生成Mysql中设计的 database 的EER图。</p>
-<ol>
-<li>进入 Workbench 选择 Database 下的 Reverse Engineer</li>
-</ol>
-<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/7922d8e7-9fef-4189-9c96-b7f30866a427.png" alt="picture"></p>
-<ol start="2">
-<li>进入后输入相应的端口号，用户名密码等如下图</li>
-</ol>
-<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/c9a19947-0036-46f1-882d-ca5e491dadfb.png"></p>
-<ol start="3">
-<li>选择想要转换为 EER 图的 database 点击 next</li>
-</ol>
-<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/fe797c39-6408-4e50-9ba7-65f49863c2ab.png"></p>
-<ol start="4">
-<li>生成结果</li>
-</ol>
-<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/98dc49f7-66d8-45f2-84a8-5e8c05d48384.png"></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;原本是想找到一个能根据 Mysql 中的 database 直接生成 ER 图的工具或者方法，但是到目前为止都没有查到，只能使用 visio 等相关软件自己手动绘制，不过好在 EER 图也很直观，功能大差不差吧</p>
+            <ul>
+<li><h3 id="16-Personalities-性格测试"><a href="#16-Personalities-性格测试" class="headerlink" title="16 Personalities(性格测试)"></a><a target="_blank" rel="noopener" href="https://www.16personalities.com/ch">16 Personalities</a>(性格测试)</h3></li>
+</ul>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/310bb4bd-9e61-4aab-b9b7-67b4a82939ca.png"></p>
+<ul>
+<li><h3 id="8-values-政治立场测试"><a href="#8-values-政治立场测试" class="headerlink" title="8 values(政治立场测试)"></a><a target="_blank" rel="noopener" href="https://songyon.github.io/8valuescn/">8 values</a>(政治立场测试)</h3></li>
+</ul>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/4fd868d7-89db-422c-84f5-3d1b8bc0955a.png"></p>
+<ul>
+<li><h3 id="纪妖-这是一个收录中国古今中外所有妖怪的网站"><a href="#纪妖-这是一个收录中国古今中外所有妖怪的网站" class="headerlink" title="纪妖(这是一个收录中国古今中外所有妖怪的网站)"></a><a target="_blank" rel="noopener" href="http://www.cbaigui.com/">纪妖</a>(这是一个收录中国古今中外所有妖怪的网站)</h3></li>
+</ul>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/4cb895e8-6980-4cbd-a4c2-d16badc02e3d.png"></p>
+<ul>
+<li><h3 id="weavesilk-一个具有科技感的对称绘图网站，不需要任何基础你也能画出就具有艺术感的图片"><a href="#weavesilk-一个具有科技感的对称绘图网站，不需要任何基础你也能画出就具有艺术感的图片" class="headerlink" title="weavesilk(一个具有科技感的对称绘图网站，不需要任何基础你也能画出就具有艺术感的图片)"></a><a target="_blank" rel="noopener" href="http://weavesilk.com/">weavesilk</a>(一个具有科技感的对称绘图网站，不需要任何基础你也能画出就具有艺术感的图片)</h3></li>
+</ul>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/d91fe33b-6765-43e0-9924-94a624529ffc.png"></p>
+<ul>
+<li><h3 id="查找不动的表情包-密集恐惧者慎入"><a href="#查找不动的表情包-密集恐惧者慎入" class="headerlink" title="查找不动的表情包(密集恐惧者慎入)"></a><a target="_blank" rel="noopener" href="http://emojisandearthporn.com/">查找不动的表情包</a>(密集恐惧者慎入)</h3></li>
+</ul>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/d21f042b-ea97-4862-9115-9bdf2fc56672.png"></p>
+<ul>
+<li><h3 id="GeekTyper：装逼利器-Geek-Typer是一个模拟黑客工作的页面，提供了多种黑客工作的场景"><a href="#GeekTyper：装逼利器-Geek-Typer是一个模拟黑客工作的页面，提供了多种黑客工作的场景" class="headerlink" title="GeekTyper：装逼利器(Geek Typer是一个模拟黑客工作的页面，提供了多种黑客工作的场景)"></a><a target="_blank" rel="noopener" href="https://geektyper.com/matrix/">GeekTyper：装逼利器</a>(Geek Typer是一个模拟黑客工作的页面，提供了多种黑客工作的场景)</h3></li>
+</ul>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/e03ff9d1-226e-426b-9f86-d95cade6c00e.png"></p>
+<ul>
+<li><h3 id="魔法键盘敲击键盘产生字符号"><a href="#魔法键盘敲击键盘产生字符号" class="headerlink" title="魔法键盘敲击键盘产生字符号"></a><a target="_blank" rel="noopener" href="http://magickeyboard.io/">魔法键盘</a>敲击键盘产生字符号</h3></li>
+</ul>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/742f7743-614f-473d-af58-3df6f86006a5.png"></p>
+<ul>
+<li><h3 id="实时地球（实时图像每-10-分钟更新一次，提供风暴、天气预报、降水、火警等数据）"><a href="#实时地球（实时图像每-10-分钟更新一次，提供风暴、天气预报、降水、火警等数据）" class="headerlink" title="实时地球（实时图像每 10 分钟更新一次，提供风暴、天气预报、降水、火警等数据）"></a><a target="_blank" rel="noopener" href="https://zoom.earth/">实时地球</a>（实时图像每 10 分钟更新一次，提供风暴、天气预报、降水、火警等数据）</h3></li>
+</ul>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/370b512b-1122-49db-bc86-06b130e221de.png"></p>
+<ul>
+<li><h3 id="深海（海洋不同深度都有什么生物）"><a href="#深海（海洋不同深度都有什么生物）" class="headerlink" title="深海（海洋不同深度都有什么生物）"></a><a target="_blank" rel="noopener" href="https://neal.fun/deep-sea/">深海</a>（海洋不同深度都有什么生物）</h3></li>
+</ul>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/33226af7-b280-483c-a595-e4ea14a18229.png"></p>
+<ul>
+<li><h3 id="克苏鲁公社（克苏鲁公社为克苏鲁神话爱好者自发创建的克苏鲁神话相关资料网站）"><a href="#克苏鲁公社（克苏鲁公社为克苏鲁神话爱好者自发创建的克苏鲁神话相关资料网站）" class="headerlink" title="克苏鲁公社（克苏鲁公社为克苏鲁神话爱好者自发创建的克苏鲁神话相关资料网站）"></a><a target="_blank" rel="noopener" href="https://www.cthulhuclub.com/">克苏鲁公社</a>（克苏鲁公社为克苏鲁神话爱好者自发创建的克苏鲁神话相关资料网站）</h3></li>
+</ul>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/27e4726c-dfa6-4c33-9fee-88e1468b9f22.png"></p>
+<ul>
+<li><h3 id="世界人口时钟（-网站展示任何国家目前的人口的实时统计，出生，死亡，净迁移和人口增长）"><a href="#世界人口时钟（-网站展示任何国家目前的人口的实时统计，出生，死亡，净迁移和人口增长）" class="headerlink" title="世界人口时钟（ 网站展示任何国家目前的人口的实时统计，出生，死亡，净迁移和人口增长）"></a><a target="_blank" rel="noopener" href="https://countrymeters.info/cn/">世界人口时钟</a>（ 网站展示任何国家目前的人口的实时统计，出生，死亡，净迁移和人口增长）</h3></li>
+</ul>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/69ed96ad-7f48-4250-abc5-16dcaa3cccb6.png"></p>
+<ul>
+<li><h3 id="物种-2000-中国节点（该网站建立和维护中国生物物种名录）"><a href="#物种-2000-中国节点（该网站建立和维护中国生物物种名录）" class="headerlink" title="物种 2000 中国节点（该网站建立和维护中国生物物种名录）"></a><a target="_blank" rel="noopener" href="http://sp2000.org.cn/">物种 2000 中国节点</a>（该网站建立和维护中国生物物种名录）</h3></li>
+</ul>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/ac09d697-eb60-401d-a2fb-099d41d3458e.png"></p>
+<ul>
+<li><h3 id="核弹威力（选择某个核弹查看爆炸影响的范围大小）"><a href="#核弹威力（选择某个核弹查看爆炸影响的范围大小）" class="headerlink" title="核弹威力（选择某个核弹查看爆炸影响的范围大小）"></a><a target="_blank" rel="noopener" href="https://nuclearsecrecy.com/nukemap/">核弹威力</a>（选择某个核弹查看爆炸影响的范围大小）</h3></li>
+</ul>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/ed4768f9-c31c-4db5-a8b2-121d572b582e.png"></p>
+<ul>
+<li><h3 id="极像素（超高像素看世界）"><a href="#极像素（超高像素看世界）" class="headerlink" title="极像素（超高像素看世界）"></a><a target="_blank" rel="noopener" href="https://www.sigoo.com/#google_vignette">极像素</a>（超高像素看世界）</h3></li>
+</ul>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/dc0297a6-ac9f-4b1e-8e8b-e9e264be7dff.png"></p>
+<ul>
+<li><h3 id="喂金鱼（喂赛博金鱼，过电子人生）"><a href="#喂金鱼（喂赛博金鱼，过电子人生）" class="headerlink" title="喂金鱼（喂赛博金鱼，过电子人生）"></a><a target="_blank" rel="noopener" href="https://goldfishies.com/">喂金鱼</a>（喂赛博金鱼，过电子人生）</h3></li>
+</ul>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/fd1aa7e1-6db6-4b7b-b59d-efca82278e90.png"></p>
+<ul>
+<li><h3 id="AI音乐（只需要选择风格，填入你自己编的歌词，这个网站就能自动帮你生成一首歌）"><a href="#AI音乐（只需要选择风格，填入你自己编的歌词，这个网站就能自动帮你生成一首歌）" class="headerlink" title="AI音乐（只需要选择风格，填入你自己编的歌词，这个网站就能自动帮你生成一首歌）"></a><a target="_blank" rel="noopener" href="https://app.songr.ai/">AI音乐</a>（只需要选择风格，填入你自己编的歌词，这个网站就能自动帮你生成一首歌）</h3></li>
+</ul>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/0f5b1210-c1b4-4deb-a636-6d5c8cbaed51.png"></p>
+<p><code> 待续</code></p>
 
         </div>
         
@@ -199,7 +311,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/mysql/"># mysql</a>
+                        <a href="/tags/%E7%BD%91%E7%AB%99/"># 网站</a>
                     
                         
                 </span>
@@ -212,10 +324,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2024/03/27/Happydays/">Happydays</a>
+                <a class="prev" rel="prev" href="/2023/10/13/%E5%85%B3%E4%BA%8EVisual-Studio/">关于Visual Studio</a>
             
             
-            <a class="next" rel="next" href="/2023/12/12/%E7%A7%98%E9%92%A5%E6%95%B4%E7%90%86/">秘钥整理</a>
+            <a class="next" rel="next" href="/2023/09/29/%E6%97%A5%E5%B8%B8%E6%91%84%E5%BD%B1/">日常摄影</a>
             
         </section>
 

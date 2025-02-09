@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
 <meta name="viewport"
@@ -12,7 +12,7 @@
 
 
 
-<title>Tag: 日常 | Rorschach&#39;s Blog</title>
+<title>利用 Mysql Workbench生成EER图 | Rorschach&#39;s Blog</title>
 
 
 
@@ -127,30 +127,127 @@
     }
 </script>
             <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">利用 Mysql Workbench生成EER图</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Rorschach</a>
+                    
+    
+                    
+                        <span class="post-time">
+                        Date: <a href="#">三月 26, 2024&nbsp;&nbsp;14:12:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/">学习总结</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+    
+        <div class="post-content">
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EER图可以较为直观的观察设计出的表相互之间的联系，这里使用 Workbnench 来演示如何生成Mysql中设计的 database 的EER图。</p>
+<ol>
+<li>进入 Workbench 选择 Database 下的 Reverse Engineer</li>
+</ol>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/7922d8e7-9fef-4189-9c96-b7f30866a427.png" alt="picture"></p>
+<ol start="2">
+<li>进入后输入相应的端口号，用户名密码等如下图</li>
+</ol>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/c9a19947-0036-46f1-882d-ca5e491dadfb.png"></p>
+<ol start="3">
+<li>选择想要转换为 EER 图的 database 点击 next</li>
+</ol>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/fe797c39-6408-4e50-9ba7-65f49863c2ab.png"></p>
+<ol start="4">
+<li>生成结果</li>
+</ol>
+<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/98dc49f7-66d8-45f2-84a8-5e8c05d48384.png"></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;原本是想找到一个能根据 Mysql 中的 database 直接生成 ER 图的工具或者方法，但是到目前为止都没有查到，只能使用 visio 等相关软件自己手动绘制，不过好在 EER 图也很直观，功能大差不差吧</p>
+
+        </div>
+        
+            <section class="post-copyright">
                 
-
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Rorschach</span>
+                    </p>
+                
+                
+                
+                
     
-<div class="container">
-    <div class="post-wrap tags">
-        <h2 class="post-title">-&nbsp;Tag&nbsp;·&nbsp;日常-</h2>
-    </div>
-    <div class="post-wrap archive">
-    
-    
+            </section>
         
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/mysql/"># mysql</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2024/03/27/happydays/">Happydays</a>
+            
+            
+            <a class="next" rel="next" href="/2023/11/02/%E5%85%B3%E4%BA%8EWIndows-11%E6%A1%8C%E9%9D%A2%E5%9B%BE%E6%A0%87%E8%87%AA%E5%8A%A8%E5%8F%98%E5%B0%8F/">关于WIndows 11桌面图标自动变小</a>
+            
+        </section>
 
-        
-            <h3>2023</h3>
-        
 
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2023/09/26/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">第一篇博客</a>
-            <span class="archive-item-date">September 26, 2023</span>
-        </article>
-    
-    
+
+    </article>
+
+
 </div>
-</div>
+_
+
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '0ad73a00ab86ccc5faef',
+        clientSecret: 'be1d314bda9d1fb1c6603dbfa58ec2215f865a54',
+        repo: 'Medicore01.github.io',
+        owner: 'Medicore01',
+        admin: 'Medicore01',
+        id: md5(location.pathname),      
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
 
             </div>
             <footer id="footer" class="footer">
