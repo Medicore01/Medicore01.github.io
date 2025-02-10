@@ -12,7 +12,7 @@
 
 
 
-<title>日常摄影 | Rorschach&#39;s Blog</title>
+<title>Jmeter快速入门 | Rorschach&#39;s Blog</title>
 
 
 
@@ -130,11 +130,76 @@
                 <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">日常摄影</h1>
+            <h1 class="post-title">Jmeter快速入门</h1>
             
                 <div class="post-meta">
                     
@@ -143,14 +208,14 @@
     
                     
                         <span class="post-time">
-                        Date: <a href="#">September 29, 2023&nbsp;&nbsp;17:07:37</a>
+                        Date: <a href="#">February 10, 2025&nbsp;&nbsp;10:03:05</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/%E6%97%A5%E5%B8%B8/">日常</a>
+                                <a href="/categories/%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/">学习总结</a>
                             
                         </span>
                     
@@ -159,40 +224,49 @@
         </header>
     
         <div class="post-content">
-            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="320" height="86" src="//music.163.com/outchain/player?type=2&amp;id=1373444265&amp;auto=1&amp;height=66"></iframe>
-
-
-
-
-
-<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/7845b447-3b4c-4714-9d95-1e44b464ee6b.jpg" alt="日出"></p>
-<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/bfed7a0a-9c14-42a1-ba78-43ec9fc89ddc.jpg"></p>
-<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/421dd3eb-dd2b-47cd-b32d-77cb009d40bb.jpg" alt="路边"></p>
-<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/ad69a0e7-0e8c-4ee0-a83d-21aae7a6ece1.jpg" alt="乡间"></p>
-<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/fdca8c67-08e2-48ae-a4f9-918416785049.jpg" alt="蝉"></p>
-<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/743efdc9-94bf-4bde-99ff-c9fe7ef964b0.jpg" alt="晨曦"></p>
-<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/9a423adb-7244-4e1f-9c47-e05242328261.jpg" alt="路口"></p>
-<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/2b462c09-3d20-4b94-a0c3-550e7ef9c372.jpg" alt="雨天"></p>
-<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/140da3dd-7bde-40b0-bc0d-867349d892c2.jpg" alt="夜空"></p>
-<p><img src="https://rorschachblog01.oss-cn-beijing.aliyuncs.com/c3db0899-57a6-4115-b6a1-0e927be15fd9.jpg"></p>
+            <h1 id="Jmeter快速入门"><a href="#Jmeter快速入门" class="headerlink" title="Jmeter快速入门"></a>Jmeter快速入门</h1><h1 id="1-安装Jmeter"><a href="#1-安装Jmeter" class="headerlink" title="1.安装Jmeter"></a>1.安装Jmeter</h1><p>Jmeter依赖于JDK，所以必须确保当前计算机上已经安装了JDK，并且配置了环境变量。</p>
+<h2 id="1-1-下载"><a href="#1-1-下载" class="headerlink" title="1.1.下载"></a>1.1.下载</h2><p>可以Apache Jmeter官网下载，地址：<a target="_blank" rel="noopener" href="http://jmeter.apache.org/download_jmeter.cgi">http://jmeter.apache.org/download_jmeter.cgi</a></p>
+<p><img src="E:/BaiduNetdiskDownload/0、2024最新SpringCloud微服务开发与实战/SpringCloud微服务—资料/day05-服务保护和分布式事务/资料/assets/image-20210715193149837.png" alt="image-20210715193149837"></p>
+<h2 id="1-2-解压"><a href="#1-2-解压" class="headerlink" title="1.2.解压"></a>1.2.解压</h2><p>因为下载的是zip包，解压缩即可使用，目录结构如下：</p>
+<p><img src="E:\BaiduNetdiskDownload\0、2024最新SpringCloud微服务开发与实战\SpringCloud微服务—资料\day05-服务保护和分布式事务\资料\assets\image-20210715193334367.png" alt="image-20210715193334367"></p>
+<p>其中的bin目录就是执行的脚本，其中包含启动脚本：</p>
+<p><img src="E:\BaiduNetdiskDownload\0、2024最新SpringCloud微服务开发与实战\SpringCloud微服务—资料\day05-服务保护和分布式事务\资料\assets\image-20210715193414601.png" alt="image-20210715193414601"></p>
+<h3 id="1-3-运行"><a href="#1-3-运行" class="headerlink" title="1.3.运行"></a>1.3.运行</h3><p>双击即可运行，但是有两点注意：</p>
+<ul>
+<li>启动速度比较慢，要耐心等待</li>
+<li>启动后黑窗口不能关闭，否则Jmeter也跟着关闭了</li>
+</ul>
+<p><img src="E:\BaiduNetdiskDownload\0、2024最新SpringCloud微服务开发与实战\SpringCloud微服务—资料\day05-服务保护和分布式事务\资料\assets\image-20210715193730096.png" alt="image-20210715193730096"></p>
+<h1 id="2-快速入门"><a href="#2-快速入门" class="headerlink" title="2.快速入门"></a>2.快速入门</h1><h2 id="2-1-设置中文语言"><a href="#2-1-设置中文语言" class="headerlink" title="2.1.设置中文语言"></a>2.1.设置中文语言</h2><p>默认Jmeter的语言是英文，需要设置：</p>
+<p><img src="E:\BaiduNetdiskDownload\0、2024最新SpringCloud微服务开发与实战\SpringCloud微服务—资料\day05-服务保护和分布式事务\资料\assets\image-20210715193838719.png" alt="image-20210715193838719"></p>
+<p>效果：</p>
+<p><img src="E:\BaiduNetdiskDownload\0、2024最新SpringCloud微服务开发与实战\SpringCloud微服务—资料\day05-服务保护和分布式事务\资料\assets\image-20210715193914039.png" alt="image-20210715193914039"></p>
 <blockquote>
-<p>TV</p>
+<p><strong>注意</strong>：上面的配置只能保证本次运行是中文，如果要永久中文，需要修改Jmeter的配置文件</p>
 </blockquote>
-<div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">
-<iframe src="//player.bilibili.com/player.html?aid=787453055&amp;bvid=BV1614y1i73E&amp;cid=1238661068&amp;p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; Left: 0; top: 0;"></iframe></div>
-<div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">
-<iframe src="//player.bilibili.com/player.html?aid=536911587&amp;bvid=BV1Fi4y1v7db&amp;cid=1360392194&amp;p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; Left: 0; top: 0;"></iframe></div>
-<div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">
-<iframe src="//player.bilibili.com/player.html?aid=975542078&amp;bvid=BV1n44y1b7Ta&amp;cid=412874424&amp;p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; Left: 0; top: 0;"></iframe></div>
-<div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">
-<iframe src="//player.bilibili.com/player.html?aid=1006253212&amp;bvid=BV1Nx4y147n3&amp;cid=1619560639&amp;p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; Left: 0; top: 0;"></iframe></div>
+<p>打开jmeter文件夹，在bin目录中找到 <strong>jmeter.properties</strong>，添加下面配置：</p>
+<figure class="highlight properties"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">language</span>=<span class="string">zh_CN</span></span><br></pre></td></tr></tbody></table></figure>
 
-
-
-
-
-
-
+<p><img src="E:\BaiduNetdiskDownload\0、2024最新SpringCloud微服务开发与实战\SpringCloud微服务—资料\day05-服务保护和分布式事务\资料\assets\image-20210715194137982.png" alt="image-20210715194137982"></p>
+<blockquote>
+<p>注意：前面不要出现#，#代表注释，另外这里是下划线，不是中划线</p>
+</blockquote>
+<h2 id="2-2-基本用法"><a href="#2-2-基本用法" class="headerlink" title="2.2.基本用法"></a>2.2.基本用法</h2><p>在测试计划上点鼠标右键，选择添加 &gt; 线程（用户） &gt; 线程组：</p>
+<p><img src="E:\BaiduNetdiskDownload\0、2024最新SpringCloud微服务开发与实战\SpringCloud微服务—资料\day05-服务保护和分布式事务\资料\assets\image-20210715194413178.png" alt="image-20210715194413178"></p>
+<p>在新增的线程组中，填写线程信息：</p>
+<p><img src="E:\BaiduNetdiskDownload\0、2024最新SpringCloud微服务开发与实战\SpringCloud微服务—资料\day05-服务保护和分布式事务\资料\assets\image-20210715195053807.png" alt="image-20210715195053807"></p>
+<p>给线程组点鼠标右键，添加http取样器：</p>
+<p><img src="E:\BaiduNetdiskDownload\0、2024最新SpringCloud微服务开发与实战\SpringCloud微服务—资料\day05-服务保护和分布式事务\资料\assets\image-20210715195144130.png" alt="image-20210715195144130"></p>
+<p>编写取样器内容：</p>
+<p><img src="E:\BaiduNetdiskDownload\0、2024最新SpringCloud微服务开发与实战\SpringCloud微服务—资料\day05-服务保护和分布式事务\资料\assets\image-20210715195410764.png" alt="image-20210715195410764"></p>
+<p>添加监听报告：</p>
+<p><img src="E:\BaiduNetdiskDownload\0、2024最新SpringCloud微服务开发与实战\SpringCloud微服务—资料\day05-服务保护和分布式事务\资料\assets\image-20210715195844978.png" alt="image-20210715195844978"></p>
+<p>添加监听结果树：</p>
+<p><img src="E:\BaiduNetdiskDownload\0、2024最新SpringCloud微服务开发与实战\SpringCloud微服务—资料\day05-服务保护和分布式事务\资料\assets\image-20210715200155537.png" alt="image-20210715200155537"></p>
+<p>汇总报告结果：</p>
+<p><img src="E:\BaiduNetdiskDownload\0、2024最新SpringCloud微服务开发与实战\SpringCloud微服务—资料\day05-服务保护和分布式事务\资料\assets\image-20210715200243194.png" alt="image-20210715200243194"></p>
+<p>结果树：</p>
+<p><img src="E:\BaiduNetdiskDownload\0、2024最新SpringCloud微服务开发与实战\SpringCloud微服务—资料\day05-服务保护和分布式事务\资料\assets\image-20210715200336526.png" alt="image-20210715200336526"></p>
 
         </div>
         
@@ -215,7 +289,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/%E6%91%84%E5%BD%B1/"># 摄影</a>
+                        <a href="/tags/%E5%B7%A5%E5%85%B7/"># 工具</a>
                     
                         
                 </span>
@@ -228,10 +302,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2023/09/30/%E4%B8%80%E4%BA%9B%E6%9C%89%E8%B6%A3%E7%9A%84%E7%BD%91%E7%AB%99/">一些有趣的网站</a>
             
-            
-            <a class="next" rel="next" href="/2023/09/28/%E5%BC%80%E5%8F%91%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E4%BE%9D%E8%B5%96/">开发中常用的依赖和配置文件</a>
+            <a class="next" rel="next" href="/2025/02/09/game-time/">game-time</a>
             
         </section>
 
