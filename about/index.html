@@ -83,6 +83,16 @@
                 
                     <a class="menu-item" href="/about">🦀About</a>
                 
+                
+                <!-- Search Box -->
+                <div class="search-container">
+                    <div class="search-icon" id="search-toggle">🔍</div>
+                    <div class="search-box" id="search-box">
+                        <input type="text" id="search-input" placeholder="搜索文章...">
+                        <div id="search-results"></div>
+                    </div>
+                </div>
+                
                 <input id="switch_default" type="checkbox" class="switch_default">
                 <label for="switch_default" class="toggleBtn"></label>
             </div>
@@ -125,7 +135,167 @@
             mobileMenu.classList.add("active")
         }
     }
+
+    // Search functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchToggle = document.getElementById('search-toggle');
+        const searchBox = document.getElementById('search-box');
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+        let searchData = [];
+
+        // Toggle search box
+        searchToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            searchBox.classList.toggle('active');
+            if (searchBox.classList.contains('active')) {
+                searchInput.focus();
+                loadSearchData();
+            }
+        });
+
+        // Close search box when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!searchBox.contains(e.target) && e.target !== searchToggle) {
+                searchBox.classList.remove('active');
+            }
+        });
+
+        // Load search data from search.xml
+        function loadSearchData() {
+            if (searchData.length > 0) return;
+
+            fetch('/search.xml')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(str => {
+                    // Handle potential encoding issues
+                    const decodedStr = decodeHTMLEntities(str);
+                    const parser = new DOMParser();
+                    const xml = parser.parseFromString(decodedStr, "application/xml");
+                    
+                    // Check for XML parsing errors
+                    const parseError = xml.getElementsByTagName("parsererror")[0];
+                    if (parseError) {
+                        throw new Error('XML parsing error: ' + parseError.textContent);
+                    }
+                    
+                    const items = xml.getElementsByTagName('entry');
+                    
+                    if (items.length === 0) {
+                        console.warn('No entries found in search.xml');
+                        return;
+                    }
+                    
+                    searchData = Array.from(items).map(item => {
+                        const title = item.getElementsByTagName('title')[0]?.textContent || '';
+                        const link = item.getElementsByTagName('link')[0]?.getAttribute('href') || 
+                                   item.getElementsByTagName('url')[0]?.textContent || '';
+                        const content = item.getElementsByTagName('content')[0]?.textContent || '';
+                        
+                        return {
+                            title: title,
+                            link: link,
+                            content: content
+                        };
+                    });
+                    
+                    console.log('Search data loaded successfully:', searchData.length, 'items');
+                })
+                .catch(error => {
+                    console.error('Error loading search data:', error);
+                    searchResults.innerHTML = '<div class="no-results">搜索数据加载失败</div>';
+                });
+        }
+
+        // Helper function to decode HTML entities
+        function decodeHTMLEntities(text) {
+            const textArea = document.createElement('textarea');
+            textArea.innerHTML = text;
+            return textArea.value;
+        }
+
+        // Perform search
+        searchInput.addEventListener('input', function() {
+            const query = this.value.trim().toLowerCase();
+            
+            if (query.length === 0) {
+                searchResults.innerHTML = '';
+                return;
+            }
+
+            const results = searchData.filter(item => {
+                return item.title.toLowerCase().includes(query) || 
+                       item.content.toLowerCase().includes(query);
+            });
+
+            displayResults(results, query);
+        });
+
+        // Display search results
+        function displayResults(results, query) {
+            if (results.length === 0) {
+                searchResults.innerHTML = '<div class="no-results">没有找到相关文章</div>';
+                return;
+            }
+
+            const resultsHtml = results.map(item => {
+                const title = highlightText(item.title, query);
+                const excerpt = getExcerpt(item.content, query);
+                
+                return `
+                    <div class="search-result-item" onclick="window.location.href='${item.link}'">
+                        <div class="search-result-title">${title}</div>
+                        <div class="search-result-excerpt">${excerpt}</div>
+                    </div>
+                `;
+            }).join('');
+
+            searchResults.innerHTML = resultsHtml;
+        }
+
+        // Highlight matching text
+        function highlightText(text, query) {
+            if (!query) return text;
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<mark>$1</mark>');
+        }
+
+        // Get excerpt with highlighted query
+        function getExcerpt(content, query) {
+            const plainText = content.replace(/<[^>]*>/g, '');
+            const index = plainText.toLowerCase().indexOf(query);
+            
+            if (index === -1) {
+                return plainText.substring(0, 100) + '...';
+            }
+
+            const start = Math.max(0, index - 30);
+            const end = Math.min(plainText.length, index + query.length + 70);
+            let excerpt = plainText.substring(start, end);
+            
+            if (start > 0) excerpt = '...' + excerpt;
+            if (end < plainText.length) excerpt = excerpt + '...';
+            
+            return highlightText(excerpt, query);
+        }
+
+        // Handle Enter key to navigate to first result
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const firstResult = searchResults.querySelector('.search-result-item');
+                if (firstResult) {
+                    firstResult.click();
+                }
+            }
+        });
+    });
 </script>
+
             <div class="main">
                 <div class="container">
     <article class="post-wrap page">
