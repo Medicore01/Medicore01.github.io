@@ -118,6 +118,15 @@
                 
                     <a class="menu-item" href="/about">🦀关于</a>
                 
+                
+                <!-- Mobile Search Box -->
+                <div class="search-container mobile-search">
+                    <div class="search-icon" id="mobile-search-toggle">🔍 搜索</div>
+                    <div class="search-box mobile-search-box" id="mobile-search-box">
+                        <input type="text" id="mobile-search-input" placeholder="搜索文章...">
+                        <div id="mobile-search-results"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -142,9 +151,16 @@
         const searchBox = document.getElementById('search-box');
         const searchInput = document.getElementById('search-input');
         const searchResults = document.getElementById('search-results');
+        
+        // Mobile search elements
+        const mobileSearchToggle = document.getElementById('mobile-search-toggle');
+        const mobileSearchBox = document.getElementById('mobile-search-box');
+        const mobileSearchInput = document.getElementById('mobile-search-input');
+        const mobileSearchResults = document.getElementById('mobile-search-results');
+        
         let searchData = [];
 
-        // Toggle search box
+        // Toggle desktop search box
         searchToggle.addEventListener('click', function(e) {
             e.stopPropagation();
             searchBox.classList.toggle('active');
@@ -154,10 +170,28 @@
             }
         });
 
-        // Close search box when clicking outside
+        // Toggle mobile search box
+        if (mobileSearchToggle) {
+            mobileSearchToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                mobileSearchBox.classList.toggle('active');
+                if (mobileSearchBox.classList.contains('active')) {
+                    mobileSearchInput.focus();
+                    loadSearchData();
+                }
+            });
+        }
+
+        // Close search boxes when clicking outside
         document.addEventListener('click', function(e) {
+            // Close desktop search
             if (!searchBox.contains(e.target) && e.target !== searchToggle) {
                 searchBox.classList.remove('active');
+            }
+            
+            // Close mobile search
+            if (mobileSearchBox && !mobileSearchBox.contains(e.target) && e.target !== mobileSearchToggle) {
+                mobileSearchBox.classList.remove('active');
             }
         });
 
@@ -219,7 +253,7 @@
             return textArea.value;
         }
 
-        // Perform search
+        // Perform desktop search
         searchInput.addEventListener('input', function() {
             const query = this.value.trim().toLowerCase();
             
@@ -233,13 +267,32 @@
                        item.content.toLowerCase().includes(query);
             });
 
-            displayResults(results, query);
+            displayResults(results, query, searchResults);
         });
 
+        // Perform mobile search
+        if (mobileSearchInput) {
+            mobileSearchInput.addEventListener('input', function() {
+                const query = this.value.trim().toLowerCase();
+                
+                if (query.length === 0) {
+                    mobileSearchResults.innerHTML = '';
+                    return;
+                }
+
+                const results = searchData.filter(item => {
+                    return item.title.toLowerCase().includes(query) || 
+                           item.content.toLowerCase().includes(query);
+                });
+
+                displayResults(results, query, mobileSearchResults);
+            });
+        }
+
         // Display search results
-        function displayResults(results, query) {
+        function displayResults(results, query, resultsContainer) {
             if (results.length === 0) {
-                searchResults.innerHTML = '<div class="no-results">没有找到相关文章</div>';
+                resultsContainer.innerHTML = '<div class="no-results">没有找到相关文章</div>';
                 return;
             }
 
@@ -255,7 +308,7 @@
                 `;
             }).join('');
 
-            searchResults.innerHTML = resultsHtml;
+            resultsContainer.innerHTML = resultsHtml;
         }
 
         // Highlight matching text
@@ -317,9 +370,9 @@
                 
                     <a href="/tags/javaweb/">javaweb<small>(2)</small></a>
                 
-                    <a href="/tags/%E6%91%84%E5%BD%B1/">摄影<small>(1)</small></a>
-                
                     <a href="/tags/springboot/">springboot<small>(1)</small></a>
+                
+                    <a href="/tags/%E6%91%84%E5%BD%B1/">摄影<small>(1)</small></a>
                 
                     <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E4%B8%8E%E5%8E%9F%E7%90%86/">计算机组成与原理<small>(1)</small></a>
                 
